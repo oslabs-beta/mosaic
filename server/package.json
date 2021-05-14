@@ -10,11 +10,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "fix": "eslint --fix .",
     "lint": "eslint .",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "start": "nodemon server.js"
   },
   "author": "Carlos Lovera, Htin Linn Aung, Jen Poole, Valerie Huang",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.12.9"
   },
@@ -25,6 +27,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.3.0"
   }
 }

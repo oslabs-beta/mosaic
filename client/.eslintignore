@@ -1,1 +1,9 @@
+build
+docs
+dist
+logs
 node_modules
+cypress
+# *.spec.js
+# *.test.js
+src/serviceWorker.js
