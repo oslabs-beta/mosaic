@@ -26,5 +26,6 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': ['error', {}, {usePrettierrc: true}], // Use our .prettierrc file as source
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
   },
 };
