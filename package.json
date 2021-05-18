@@ -1,0 +1,23 @@
+{
+  "name": "mosaic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd ./server && concurrently \"npm run start\" \"cd  ../client && npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/mosaic.git"
+  },
+  "author": "Carlos Lovera, Htin Linn Aung, Jen Poole, Valerie Huang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/mosaic/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/mosaic#readme",
+  "devDependencies": {
+    "concurrently": "^6.1.0"
+  }
+}

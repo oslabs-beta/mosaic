@@ -1,0 +1,16 @@
+# dependencies
+/node_modules
+/build
+
+# misc
+*.DS_Store
+*.icloud
+
+.env
+.env.local
+.env.development
+.env.stage
+.env.production
+
+# custom vsocde Intellisense to work with babel alias
+jsconfig.json

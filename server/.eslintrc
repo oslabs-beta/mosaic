@@ -1,0 +1,72 @@
+{
+  "env": {
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "extends": ["airbnb-base","plugin:jsdoc/recommended"],
+  "plugins": [
+    "jsdoc"
+  ],
+  "rules": {
+    "padded-blocks": ["error", { "blocks": "never" }],
+    "padding-line-between-statements": [
+      "error",   
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": ["if","switch"]},
+      { "blankLine": "always", "prev": ["if","switch"], "next":["const", "let", "var"]},
+      { "blankLine": "always", "prev": ["multiline-const"], "next":["const", "let", "var"]},
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
+    "semi": [ "error", "always"],
+    "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+    "object-property-newline": [2, { "allowAllPropertiesOnSameLine": false }],
+    "no-dupe-keys": "warn" ,
+    "quotes": ["error", "double"],
+    "import/prefer-default-export": ["off"],
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+    "import/no-named-as-default": ["warn"],
+    "no-unused-vars": ["error"],
+    "no-param-reassign": ["warn"],
+    "no-await-in-loop": ["warn"],
+    "no-restricted-syntax": ["off"],
+    "import/order": 0,
+    "import/no-named-as-default-member": 0,
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true
+      }
+    ],
+    "no-bitwise": 1,
+    "consistent-return": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/index.js"],
+      "rules": {
+        "sort-imports": [
+          "error",
+          {
+            "ignoreCase": false,
+            "ignoreDeclarationSort": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+          }
+        ]
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
+}

@@ -1,0 +1,12 @@
+# dependencies
+/node_modules/
+
+# misc
+*.DS_Store
+*.icloud
+
+.env
+.env.local
+.env.development
+.env.stage
+.env.production
