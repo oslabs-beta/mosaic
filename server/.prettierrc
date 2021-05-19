@@ -14,5 +14,6 @@
   "quoteProps": "as-needed",
   "requirePragma": false,
   "useTabs": false,
-  "vueIndentScriptAndStyle": false
+  "vueIndentScriptAndStyle": false,
+  "endOfLine": "auto"
 }
