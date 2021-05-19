@@ -17,6 +17,10 @@
     "url": "https://github.com/oslabs-beta/mosaic/issues"
   },
   "homepage": "https://github.com/oslabs-beta/mosaic#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.9"
+  },
   "devDependencies": {
     "concurrently": "^6.1.0"
   }
