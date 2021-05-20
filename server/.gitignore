@@ -10,3 +10,6 @@
 .env.development
 .env.stage
 .env.production
+
+# credentials
+keys.js
