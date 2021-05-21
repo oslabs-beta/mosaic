@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/oslabs-beta/mosaic#readme",
   "dependencies": {
+<<<<<<< HEAD
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
+=======
+    "antd": "^4.15.6",
+>>>>>>> 6f0631352c2d12d4231dbeec0c70ad63bffad926
     "express": "^4.17.1",
     "mongoose": "^5.12.9"
   },
