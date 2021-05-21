@@ -1,5 +1,5 @@
 import passport from "passport";
-import keys from "../../keys.js";
+import keys from "../keys";
 import passportGoogleOAuth2 from "passport-google-oauth20";
 
 const {
@@ -28,5 +28,3 @@ passport.use(
     return cb(null, profile);
   }
 ));
-
-export default passport;

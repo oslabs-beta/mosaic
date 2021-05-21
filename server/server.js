@@ -5,7 +5,8 @@ import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import keys from "./keys.js";
-import "./middlewares/auth/passport.js";
+import "./services/passport";
+import authRoutes from "./routes/auth";
 
 const {SESSION_SECRET, COOKIE_KEY} = keys;
 
@@ -25,6 +26,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/auth", authRoutes);
+
 app.get('/', (req, res) => {
   res.send('<h1>Home</h1>');
 });
@@ -43,14 +46,7 @@ app.get('/profile', checkUserLoggedIn, (req, res) => {
   res.send(`<h1>${req.user.displayName}'s Profile Page</h1>`)
 });
 
-// Auth Routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
-  function(req, res) {
-    res.redirect('/profile');
-  }
-);
 
 //Logout
 app.get('/logout', (req, res) => {
@@ -59,11 +55,9 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
-app.listen(3000, () => console.log(`App listening on port ${3000} 🚀🔥`))
-
 const startServer = () => {
   app.listen(PORT);
-  console.log("Express server is running on port 8080")
+  console.log(`App listening on port ${3000} 🚀🔥`)
 };
 
 startServer();

@@ -12,7 +12,7 @@
     "fix": "eslint --fix .",
     "lint": "eslint .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "start": "nodemon server.js"
+    "start": "nodemon --experimental-specifier-resolution=node server.js"
   },
   "author": "Carlos Lovera, Htin Linn Aung, Jen Poole, Valerie Huang",
   "license": "ISC",
