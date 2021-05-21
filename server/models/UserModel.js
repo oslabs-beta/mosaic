@@ -1,17 +1,21 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+
+const options = {
+  timestamps: true, 
+  createdAt: "created_at", 
+  updatedAt: "updated_at"
+};
 
 const UserSchema = new Schema(
   {
     firstName: {
       type: String,
       required: true,
-      unique: true,
     },
     lastName: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -20,7 +24,7 @@ const UserSchema = new Schema(
     },
     githubId: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     googleId: {
@@ -41,5 +45,5 @@ const UserSchema = new Schema(
   options
 );
 
-const User = mongoose.model('User', UserModel);
-module.exports = { User };
+const User = mongoose.model('User', UserSchema);
+export default {User};

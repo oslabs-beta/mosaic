@@ -19,6 +19,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.17.1",

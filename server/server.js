@@ -4,14 +4,35 @@ import cors from "cors";
 import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
-import keys from "./keys.js";
-import "./services/passport";
-import authRoutes from "./routes/auth";
+import dotenv from "dotenv";
 
-const {SESSION_SECRET, COOKIE_KEY} = keys;
+import authRoutes from "./routes/auth";
+// import "./models/UserModel";
+import "./services/passport";
+
+dotenv.config();
+
+const {SESSION_SECRET, COOKIE_KEY} = process.env;
 
 const PORT = 8080;
 const app = express();
+
+// const corsOptions = {
+//   origin:'http://localhost:3000',
+//   methods: 'GET',
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" );
+  next();
+});
 
 app.use(cookieParser());
 app.use(session({
@@ -26,7 +47,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/auth", authRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('<h1>Home</h1>');
@@ -45,8 +66,6 @@ const checkUserLoggedIn = (req, res, next) => {
 app.get('/profile', checkUserLoggedIn, (req, res) => {
   res.send(`<h1>${req.user.displayName}'s Profile Page</h1>`)
 });
-
-
 
 //Logout
 app.get('/logout', (req, res) => {

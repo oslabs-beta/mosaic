@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const options = {
+  timestamps: true, 
+  createdAt: "created_at", 
+  updatedAt: "updated_at"
+};
+
 const ServiceSchema = new Schema(
   {
     name: {
@@ -42,5 +48,5 @@ const ServiceSchema = new Schema(
   options
 );
 
-const Service = mongoose.model('Service', ServiceModel);
-module.exports = { Service };
+const Service = mongoose.model('Service', ServiceSchema);
+export default {Service};

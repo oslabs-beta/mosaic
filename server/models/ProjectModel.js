@@ -1,5 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+
+const options = {
+  timestamps: true, 
+  createdAt: "created_at", 
+  updatedAt: "updated_at"
+};
 
 const ProjectSchema = new Schema(
   {
@@ -13,7 +19,7 @@ const ProjectSchema = new Schema(
       required: true,
     },
     services: {
-      type: array,
+      type: Array,
     },
     serviceCount: {
       type: Number,
@@ -22,5 +28,5 @@ const ProjectSchema = new Schema(
   options
 );
 
-const Project = mongoose.model('Project', ProjectModel);
-module.exports = { Project };
+const Project = mongoose.model('Project', ProjectSchema);
+export default {Project};

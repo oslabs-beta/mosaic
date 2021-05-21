@@ -5,11 +5,9 @@
 *.DS_Store
 *.icloud
 
+# credentials & environment variables
 .env
 .env.local
 .env.development
 .env.stage
 .env.production
-
-# credentials
-keys.js
