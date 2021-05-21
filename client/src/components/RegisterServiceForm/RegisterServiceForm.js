@@ -1,4 +1,4 @@
-import {Form, Input, Button, Radio} from 'antd';
+// import {Form, Input, Button, Radio} from 'antd';
 // import {useState} from 'react';
 
 function RegisterServiceForm() {
@@ -19,7 +19,7 @@ function RegisterServiceForm() {
     <div>
       <h1>Register Service Form</h1>
 
-      <Form
+      {/* <Form
         // {...formItemLayout}
         layout="horizontal"
         form={Form.useForm()}
@@ -41,7 +41,7 @@ function RegisterServiceForm() {
         <Form.Item {...buttonItemLayout}>
           <Button type="primary">Submit</Button>
         </Form.Item>
-      </Form>
+      </Form> */}
 
       {/* <form onSubmit={(e) => handleSubmit(e)}>
         <p>
