@@ -7,6 +7,13 @@ import RegisterServiceForm from './components/RegisterServiceForm';
 function App() {
   return (
     <div className="App">
+      <p>
+        <Link to="/">Home</Link>
+      </p>
+      <p>
+        <Link to="/register-service">Register Service</Link>
+      </p>
+
       <Switch>
         <Route path="/register-service">
           <RegisterServiceForm />
@@ -16,14 +23,6 @@ function App() {
           <h1>Mosaic</h1>
         </Route>
       </Switch>
-
-      <p>
-        <Link to="/">Home</Link>
-      </p>
-
-      <p>
-        <Link to="/register-service">Register Service</Link>
-      </p>
     </div>
   );
 }
