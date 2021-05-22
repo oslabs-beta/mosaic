@@ -6,7 +6,7 @@ function RegisterServiceForm() {
   const onFinish = (values) => {
     console.log('Success:', values);
     axios
-      .post('./service/register', {
+      .post('/service/register', {
         ...values,
       })
       .then((response) => console.log(response))
