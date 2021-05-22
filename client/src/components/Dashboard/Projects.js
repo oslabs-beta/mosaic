@@ -7,7 +7,7 @@ function Projects() {
     <div className="site-card-wrapper">
       <Row gutter={16}>
         <Col span={8}>
-          <Card title="Card title">
+          <Card>
             <Button type="primary" shape="round" icon={<FileAddOutlined />} size={'small'}>
               Add Project
             </Button>
