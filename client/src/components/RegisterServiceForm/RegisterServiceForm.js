@@ -1,22 +1,16 @@
 import {Form, Input, Button} from 'antd';
+import axios from 'axios';
 // import {useState} from 'react';
 
 function RegisterServiceForm() {
-  //   const [values, setValues] = useState({
-  //     name: '',
-  //     description: '',
-  //     version: '',
-  //     ipAddress: '',
-  //     host: '',
-  //   });
-
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     console.log('form data', e.target);
-  //   };
-
   const onFinish = (values) => {
     console.log('Success:', values);
+    axios
+      .post('./service/register', {
+        ...values,
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -65,7 +59,7 @@ function RegisterServiceForm() {
               message: 'Cannot be blank',
             },
           ]}>
-          <Input placeholder="127.0. 0.1" />
+          <Input placeholder="127.0.0.1" />
         </Form.Item>
 
         <Form.Item
