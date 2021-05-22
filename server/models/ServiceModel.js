@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+import {options} from './helpers';
 
-const options = {
-  timestamps: true, 
-  createdAt: "created_at", 
-  updatedAt: "updated_at"
-};
+const Schema = mongoose.Schema;
+const {
+  Types: {
+    ObjectId,
+    String,
+  }
+} = Schema;
 
 const ServiceSchema = new Schema(
   {
@@ -31,22 +33,24 @@ const ServiceSchema = new Schema(
       required: true,
     },
     dependency: {
-      type: array,
+      type: [ObjectId],
+      default: [],
     },
     events: {
-      type: array,
+      type: [ObjectId],
+      default: [],
     },
     description: {
       type: String,
-      required: true,
+      default: "",
     },
     projectId: {
-      type: String,
+      type: ObjectId,
       required: true,
     },
   },
   options
 );
 
-const Service = mongoose.model('Service', ServiceSchema);
+const Service = mongoose.model('services', ServiceSchema);
 export default {Service};

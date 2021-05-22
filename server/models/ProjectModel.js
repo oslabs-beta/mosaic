@@ -1,11 +1,15 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import {options} from './helpers';
 
-const options = {
-  timestamps: true, 
-  createdAt: "created_at", 
-  updatedAt: "updated_at"
-};
+const Schema = mongoose.Schema;
+const {
+  Types: { 
+    Mixed,
+    Number,
+    ObjectId, 
+    String 
+  },
+} = Schema;
 
 const ProjectSchema = new Schema(
   {
@@ -17,16 +21,19 @@ const ProjectSchema = new Schema(
     description: {
       type: String,
       required: true,
+      default: "",
     },
     services: {
-      type: Array,
+      type: [String],
+      default: [],
     },
     serviceCount: {
       type: Number,
+      default: 0,
     },
   },
-  options
+  options,
 );
 
-const Project = mongoose.model('Project', ProjectSchema);
+const Project = mongoose.model('projects', ProjectSchema);
 export default {Project};

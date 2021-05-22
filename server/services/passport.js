@@ -11,18 +11,17 @@ const {
   GOOGLE_OAUTH_CALLBACK,
 } = process.env;
 
-// const User = mongoose.model('User');
+const User = mongoose.model('users');
 const GoogleStrategy = passportGoogleOAuth2.Strategy;
 
 passport.serializeUser((user, done) => {
-  // done(null, user.id);
   done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-  // const existingUser = await User.findById(id);
+passport.deserializeUser(async (user, done) => {
+  // const existingUser = await User.findById(user.id);
   // done(null, existingUser);
-  done(null, id);
+  done(null, user);
 });
 
 passport.use(
@@ -32,10 +31,6 @@ passport.use(
     callbackURL: GOOGLE_OAUTH_CALLBACK,
   },
   async (accessToken, refreshToken, profile, done) => {
-    // const existingUser = await User.findOne({googleId: profile.id});
-    // if (existingUser) {
-    //   done(null, existingUser);
-    // } else {
     const {
       id,
       name: {
@@ -44,12 +39,27 @@ passport.use(
       },
       emails,
     } = profile;
-    const emailAddress = emails[0].value;
-    console.log(profile);
-    console.log(id, givenName, familyName, emailAddress);
-    //   const newUser = await new User({googleId: profile.id}).save();
-      // done(null, newUser);
-    // }
-    done(null, profile);
+
+    try {
+      const existingUser = await User.findOne({googleId: id});
+      if (existingUser) {
+        done(null, existingUser);
+      } else {
+        const newUserData = {
+          googleId: id,
+          firstName: givenName,
+          lastName: familyName,
+          email: emails[0].value,
+        };
+        try {
+          const newUser = await new User(newUserData).save();
+          done(null, newUser);
+        } catch(e) {
+          console.log(e);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 ));

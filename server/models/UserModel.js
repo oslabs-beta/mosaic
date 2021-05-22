@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
+import {options} from './helpers';
 const Schema = mongoose.Schema;
-
-const options = {
-  timestamps: true, 
-  createdAt: "created_at", 
-  updatedAt: "updated_at"
-};
 
 const UserSchema = new Schema(
   {
@@ -26,24 +21,29 @@ const UserSchema = new Schema(
       type: String,
       // required: true,
       unique: true,
+      default: "",
     },
     googleId: {
       type: String,
       required: true,
       unique: true,
+      default: "",
     },
     projects: {
       type: Array,
+      default: [],
     },
     projectCount: {
       type: Number,
+      default: 0,
     },
     companyName: {
       type: String,
+      default: "",
     },
   },
   options
 );
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('users', UserSchema);
 export default {User};

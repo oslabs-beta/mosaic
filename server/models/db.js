@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-mongoose.pluralize(null);
-
-mongoose.connect(process.env.MONGO_DB_URI, {
+const mongoOptions = {
   // options for the connect method to parse the URI
-  useNewUrlParser: true,
   useUnifiedTopology: true,
-})
-  .then(() => console.log('Connected to Resourcus DB.'))
+  useNewUrlParser: true,
+  useCreateIndex: true
+};
+
+mongoose.pluralize(null);
+mongoose.connect(process.env.MONGO_DB_URI, mongoOptions)
+  .then(() => console.log('Connected to Mosaic DB 🚀🔥'))
   .catch((err) => console.log(err));

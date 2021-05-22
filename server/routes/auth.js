@@ -1,24 +1,26 @@
 import express from "express";
 import passport from "passport";
+import authenticationController from "../middlewares/authentication";
+import authentication from "../middlewares/authentication";
 
 const router = express.Router();
 
-// Auth Routes
+// PassportJS Google OAuth Routes
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
-  function(req, res) {
-    // res.redirect('/profile');
-    res.redirect('/auth');
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/failed' }),
+  authentication.saveUserSession,
+  (req, res) => {
+    res.redirect('http://localhost:3000/dashboard');
   }
 );
 
-router.get('/logout', (req, res) => {
-  req.logOut();
-  res.send(req.user);
+router.get('/logout', authentication.logOutNClearUserSession, (req, res) => {
+  res.send(res.locals.user);
 });
 
-router.get('/current_user', (req, res) => {
-  res.send(req.user);
-})
+router.get('/current_user', authenticationController.getCurrentUser, (req, res) => {
+  res.json(res.locals.user);
+});
 
 export default router;
