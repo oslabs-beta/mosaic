@@ -16,7 +16,8 @@ router.get('/google/callback',
 );
 
 router.get('/logout', authentication.logOutNClearUserSession, (req, res) => {
-  res.send(res.locals.user);
+  // res.send(res.locals.user);
+  res.redirect('http://localhost:3000/dashboard');
 });
 
 router.get('/current_user', authenticationController.getCurrentUser, (req, res) => {
