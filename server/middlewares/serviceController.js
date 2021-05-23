@@ -9,7 +9,7 @@ serviceController.registerService = (req, res, next) => {
     version,
     ipAddress,
     host,
-    status: status || 'active',
+    status: status || 'Pending',
     dependency: [],
     events: [],
     description,
