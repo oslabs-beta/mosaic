@@ -3,9 +3,6 @@ const serviceController = {};
 
 serviceController.registerService = (req, res, next) => {
   const {name, description, version, ipAddress, host, status, projectId} = req.body;
-  console.log('req body', req.body);
-  console.log('name:', name);
-  console.log(Service);
 
   Service.create({
     name,
