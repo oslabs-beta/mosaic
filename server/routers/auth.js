@@ -1,7 +1,6 @@
 import express from "express";
 import passport from "passport";
-import authenticationController from "../middlewares/authentication";
-import authentication from "../middlewares/authentication";
+import authenticationController from "../controllers/authenticationController";
 
 const router = express.Router();
 
@@ -9,13 +8,13 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/failed' }),
-  authentication.saveUserSession,
+  authenticationController.saveUserSession,
   (req, res) => {
     res.redirect('http://localhost:3000/dashboard');
   }
 );
 
-router.get('/logout', authentication.logOutNClearUserSession, (req, res) => {
+router.get('/logout', authenticationController.logOutNClearUserSession, (req, res) => {
   // res.send(res.locals.user);
   res.redirect('http://localhost:3000/dashboard');
 });

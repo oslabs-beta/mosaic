@@ -1,4 +1,3 @@
-
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
@@ -8,7 +7,8 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 
 // Routes Imports
-import authRoutes from "./routes/auth";
+import authRouter from "./routers/auth";
+import projectRouter from "./routers/project";
 
 // Models Imports
 import "./models/db";
@@ -62,8 +62,19 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRoutes);
+app.use('/auth', authRouter);
+app.use('/projects', projectRouter);
 
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = { ...defaultErr, ...err };
+  console.log(errorObj.status, errorObj.message);
+  return res.status(errorObj.status).send(errorObj.message.err);
+});
 
 const startServer = () => {
   app.listen(PORT);

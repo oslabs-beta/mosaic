@@ -19,6 +19,8 @@
   "homepage": "https://github.com/oslabs-beta/mosaic#readme",
   "dependencies": {
     "antd": "^4.15.6",
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.12.9"
   },
