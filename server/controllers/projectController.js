@@ -1,4 +1,4 @@
-const  Projects  = require('../models/ProjectModel');
+import Projects from '../models/ProjectModel';
 
 
 const projectController = {};
@@ -25,4 +25,4 @@ projectController.createProject = (req, res, next) => {
   }); 
 }
 
-module.exports = projectController;
+export default projectController;

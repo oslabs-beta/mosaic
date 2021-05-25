@@ -1,4 +1,4 @@
-const Service = require('../models/ServiceModel');
+import Service from '../models/ServiceModel';
 const serviceController = {};
 
 serviceController.registerService = (req, res, next) => {
@@ -32,4 +32,4 @@ serviceController.registerService = (req, res, next) => {
     });
 };
 
-module.exports = serviceController;
+export default serviceController;

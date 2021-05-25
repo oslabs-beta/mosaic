@@ -1,5 +1,6 @@
-const express = require('express');
-const serviceController = require('../middlewares/serviceController');
+import express from 'express';
+import serviceController from '../controllers/serviceController';
+
 const router = express.Router();
 
 router.post('/register', serviceController.registerService, (req, res) => {
@@ -8,4 +9,4 @@ router.post('/register', serviceController.registerService, (req, res) => {
   res.status(200).json(res.locals.response);
 });
 
-module.exports = router;
+export default router;

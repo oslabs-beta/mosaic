@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import {options} from './helpers';
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
@@ -6,12 +7,10 @@ const UserSchema = new Schema(
     firstName: {
       type: String,
       required: true,
-      unique: true,
     },
     lastName: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -20,26 +19,31 @@ const UserSchema = new Schema(
     },
     githubId: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
+      default: "",
     },
     googleId: {
       type: String,
       required: true,
       unique: true,
+      default: "",
     },
     projects: {
       type: Array,
+      default: [],
     },
     projectCount: {
       type: Number,
+      default: 0,
     },
     companyName: {
       type: String,
+      default: "",
     },
   },
   options
 );
 
-const User = mongoose.model('User', UserModel);
-module.exports = { User };
+const User = mongoose.model('users', UserSchema);
+export default {User};
