@@ -49,7 +49,7 @@ const ServiceSchema = new Schema(
       required: true,
     },
   },
-  options
+  options,
 );
 
 const Service = mongoose.model('services', ServiceSchema);

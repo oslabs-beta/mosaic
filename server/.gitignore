@@ -11,3 +11,5 @@
 .env.development
 .env.stage
 .env.production
+
+keys.js

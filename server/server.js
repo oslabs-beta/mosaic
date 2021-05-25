@@ -9,6 +9,7 @@ import passport from "passport";
 // Routes Imports
 import authRouter from "./routers/auth";
 import projectRouter from "./routers/project";
+import serviceRouter from "./routers/service";
 
 // Models Imports
 import "./models/db";
@@ -64,14 +65,15 @@ app.use(passport.session());
 
 app.use('/auth', authRouter);
 app.use('/projects', projectRouter);
+app.use('/service', serviceRouter);
 
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: 'An error occurred' },
+    message: {err: `An error occurred - ${err}`},
   };
-  const errorObj = { ...defaultErr, ...err };
+  const errorObj = {...defaultErr, ...err};
   console.log(errorObj.status, errorObj.message);
   return res.status(errorObj.status).send(errorObj.message.err);
 });
