@@ -14,21 +14,20 @@ function App() {
   return (
     <div className="App">
       {!loggedIn ? (
-        <Switch>
-          <Route path="/">
-            <h1> Landing page</h1>
-          </Route>
-        </Switch>
+        <h1> Landing page</h1>
       ) : (
-        <div className="dashboardContainer">
+        <div>
           <Header className="header">
             <div className="logo" />
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['3']}>
-              <Menu.Item key="3">
-                <Link to="/"> Dashboard Home</Link>
+              <Menu.Item key="1">
+                <Link to="/">Home</Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to="/register-service">Register Service</Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link to="/dashboard"> Dashboard </Link>
               </Menu.Item>
             </Menu>
           </Header>
@@ -45,16 +44,15 @@ function App() {
                     minHeight: 280,
                   }}>
                   <Switch>
-                    {/* <Route path="/dashboard">
+                    <Route path="/dashboard">
                       <Projects />
-                    </Route> */}
-
+                    </Route>
                     <Route path="/register-service">
                       <RegisterServiceForm />
                     </Route>
 
                     <Route path="/">
-                      <Projects />
+                      <h1>Mosaic</h1>
                     </Route>
                   </Switch>
                 </Content>
