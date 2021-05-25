@@ -36,4 +36,4 @@ const ProjectSchema = new Schema(
 );
 
 const Project = mongoose.model('projects', ProjectSchema);
-export default {Project};
+export default Project;
