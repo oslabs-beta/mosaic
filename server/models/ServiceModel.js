@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const options = {
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+};
+
 const ServiceSchema = new Schema(
   {
     name: {
@@ -25,10 +31,10 @@ const ServiceSchema = new Schema(
       required: true,
     },
     dependency: {
-      type: array,
+      type: Array,
     },
     events: {
-      type: array,
+      type: Array,
     },
     description: {
       type: String,
@@ -39,8 +45,8 @@ const ServiceSchema = new Schema(
       required: true,
     },
   },
-  options
+  options,
 );
 
-const Service = mongoose.model('Service', ServiceModel);
-module.exports = { Service };
+const Service = mongoose.model('services', ServiceSchema);
+module.exports = Service;
