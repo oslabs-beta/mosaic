@@ -7,8 +7,7 @@ import axios from 'axios';
 
 function Projects() {
   const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
-  const onCreate = async (values) => {
-    console.log('Received values of form: ', values);
+  const onCreate = (values) => {
     axios
       .post('http://localhost:8080/projects', {
         ...values,

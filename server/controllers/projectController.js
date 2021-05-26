@@ -1,4 +1,5 @@
-import Project from '../models/ProjectModel';
+import mongoose from 'mongoose';
+const Project = mongoose.model('projects');
 const projectController = {};
 
 projectController.createProject = (req, res, next) => {
@@ -20,7 +21,7 @@ projectController.createProject = (req, res, next) => {
           message: err,
         },
       });
-    }); 
-}
+    });
+};
 
 export default projectController;

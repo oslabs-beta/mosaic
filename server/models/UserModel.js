@@ -17,12 +17,12 @@ const UserSchema = new Schema(
       required: true,
       unique: true,
     },
-    githubId: {
-      type: String,
-      // required: true,
-      unique: true,
-      default: "",
-    },
+    // githubId: {
+    //   type: String,
+    //   // required: true,
+    //   unique: true,
+    //   default: "",
+    // },
     googleId: {
       type: String,
       required: true,
