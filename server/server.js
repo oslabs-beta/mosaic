@@ -6,18 +6,18 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 
+// Models Imports
+import "./models/db";
+import "./models/UserModel";
+import "./models/EventModel";
+import "./models/ProjectModel";
+import "./models/ServiceModel";
+import "./services/passport";
+
 // Routes Imports
 import authRouter from "./routers/auth";
 import projectRouter from "./routers/project";
 import serviceRouter from "./routers/service";
-
-// Models Imports
-import "./models/db";
-import "./models/EventModel";
-import "./models/ProjectModel";
-import "./models/ServiceModel";
-import "./models/UserModel";
-import "./services/passport";
 
 // Environment Variables
 dotenv.config();

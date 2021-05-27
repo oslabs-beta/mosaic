@@ -7,7 +7,7 @@ const mongoOptions = {
   // options for the connect method to parse the URI
   useUnifiedTopology: true,
   useNewUrlParser: true,
-  useCreateIndex: true
+  // useCreateIndex: true
 };
 
 mongoose.pluralize(null);

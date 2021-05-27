@@ -1,28 +1,27 @@
-import Projects from '../models/ProjectModel';
-
-
+import mongoose from 'mongoose';
+const Project = mongoose.model('projects');
 const projectController = {};
 
 projectController.createProject = (req, res, next) => {
-  Projects.create({
-    name: req.body.name,
-    description: req.body.description,
+  Project.create({
+    name: req.body.projectName,
+    description: req.body.projectDescription,
     services: req.body.services,
-    serviceCount: req.body.serviceCount,
+    serviceCount: req.body.services.length,
   })
-  .then(data => {
-    res.locals.response = data;
-    next();
-  })
-  .catch((err) => {
-    next({
-      log: `Create project - ERROR: ${err}`,
-      message: {
-        err: 'Error occured in projectController.createProject',
-        message: err,
-      },
+    .then((data) => {
+      res.locals.response = data;
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: `Create project - ERROR: ${err}`,
+        message: {
+          err: 'Error occured in projectController.createProject',
+          message: err,
+        },
+      });
     });
-  }); 
-}
+};
 
 export default projectController;
