@@ -10,6 +10,10 @@ import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
 import CustomEvents from './components/Dashboard/CustomEvents';
+
+// pages
+import ServiceDetails from './pages/ServiceDetails';
+
 const {Header, Content} = Layout;
 
 function App() {
@@ -65,6 +69,9 @@ function App() {
                       </Route>
                       <Route path="/register-service">
                         <RegisterServiceForm />
+                      </Route>
+                      <Route path="/service/:id">
+                        <ServiceDetails />
                       </Route>
                       <Route path="/custom-events">
                         <CustomEvents />
