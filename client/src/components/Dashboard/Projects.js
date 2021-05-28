@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {Row, Col, Card, Button} from 'antd';
 import {FileAddOutlined} from '@ant-design/icons';
 import CreateProjectForm from './CreateProjectForm';
@@ -22,7 +23,8 @@ function Projects() {
       .post('http://localhost:8080/projects', {
         ...values,
       })
-      .then(() => {
+      .then((data) => {
+        setProjects([...projects, data.data]);
         setIsCreateProjectOpen(false);
       })
       .catch((error) => console.log(error));
@@ -48,7 +50,12 @@ function Projects() {
         <Row key={i} gutter={16} style={{marginBottom: '16px'}}>
           {row.map((project) => (
             <Col key={project.id} span={8}>
-              <Card title={project.name}>{project.description}</Card>
+              <Card
+                title={
+                  <Link to={`/dashboard/project-details/${project._id}`}>{project.name}</Link>
+                }>
+                {project.description}
+              </Card>
             </Col>
           ))}
         </Row>

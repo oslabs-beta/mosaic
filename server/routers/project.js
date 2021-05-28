@@ -13,7 +13,14 @@ router.post('/',
 router.get('/',
   project.fetchProjects,
   (req, res) => {
-    return res.status(200).json(res.locals.response)
+    return res.status(200).json(res.locals.response);
+  }
+)
+
+router.get('/:id',
+  project.fetchProject,
+  (req, res) => {
+    return res.status(200).json(res.locals.response);
   }
 )
 export default router;

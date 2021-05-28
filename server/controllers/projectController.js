@@ -39,6 +39,25 @@ projectController.fetchProjects = (req, res, next) => {
         },
       });
     })
-}
+};
+
+projectController.fetchProject = (req, res, next) => {
+  const { id } = req.params;
+
+  Project.find({_id: id})
+    .then((data) =>{
+      res.locals.response = data[0];
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: `Fetch project - ERROR: ${err}`,
+        message: {
+          err: 'Error occured in projectController.fetchProject',
+          message: err,
+        },
+      });
+    })
+};
 
 export default projectController;
