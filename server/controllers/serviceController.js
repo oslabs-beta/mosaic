@@ -13,7 +13,7 @@ serviceController.registerService = (req, res, next) => {
     dependency: [],
     events: [],
     description,
-    projectId: projectId || '00000',
+    projectId: projectId || '60a7210af2ee8c64dc1f611a',
   })
     .then((data) => {
       res.locals.response = data;
