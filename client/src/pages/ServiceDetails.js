@@ -53,9 +53,9 @@ function ServiceDetails() {
         </p>
       </Card>
       <Card size="small" title={'Status: ' + status} style={{width: 300}}>
-        <p>{status === 'Pending' && <QuestionCircleOutlined />}</p>
-        <p>{status === 'Active' && <CheckCircleOutlined />}</p>
-        <p>{status === 'Inactive' && <WarningOutlined />}</p>
+        <p>{status === 'Pending' && <QuestionCircleOutlined className="anticon--large" />}</p>
+        <p>{status === 'Active' && <CheckCircleOutlined className="anticon--large" />}</p>
+        <p>{status === 'Inactive' && <WarningOutlined className="anticon--large" />}</p>
       </Card>
       <Card size="small" title={'Updated: ' + lastUpdated} style={{width: 300}}>
         <p>

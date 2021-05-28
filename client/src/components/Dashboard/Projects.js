@@ -22,12 +22,12 @@ function Projects() {
     <div className="site-card-wrapper">
       <Row gutter={16}>
         <Col span={8}>
-          <Card>
+          <Card className="card--centered">
             <Button
               type="primary"
               shape="round"
               icon={<FileAddOutlined />}
-              size={'small'}
+              size={'large'}
               onClick={() => setIsCreateProjectOpen(true)}>
               Add Project
             </Button>
