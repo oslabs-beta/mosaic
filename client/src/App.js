@@ -2,12 +2,14 @@ import './App.css';
 import {Switch, Route, Link} from 'react-router-dom';
 import User from './components/providers/User';
 import {GoogleSignInButton} from './components/GoogleSignInButton';
+import {UserOutlined} from '@ant-design/icons';
 
 // components
 import RegisterServiceForm from './components/RegisterServiceForm';
-import {Layout, Menu} from 'antd';
+import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
+import CustomEvents from './components/Dashboard/CustomEvents';
 const {Header, Content} = Layout;
 
 function App() {
@@ -32,6 +34,17 @@ function App() {
                 <Menu.Item key="3">
                   <Link to="/dashboard"> Dashboard </Link>
                 </Menu.Item>
+                <Menu.Item key="4" style={{position: 'absolute', right: 88}}>
+                  <Link to="/user-settings"> Carlos </Link>
+                </Menu.Item>
+                <Link to="/user-settings">
+                  <Avatar
+                    shape="square"
+                    size={64}
+                    icon={<UserOutlined />}
+                    style={{position: 'absolute', right: 24}}
+                  />
+                </Link>
               </Menu>
             </Header>
 
@@ -53,7 +66,9 @@ function App() {
                       <Route path="/register-service">
                         <RegisterServiceForm />
                       </Route>
-
+                      <Route path="/custom-events">
+                        <CustomEvents />
+                      </Route>
                       <Route path="/">
                         <h1>Mosaic</h1>
                       </Route>
