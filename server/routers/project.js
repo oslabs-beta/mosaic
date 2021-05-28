@@ -8,8 +8,13 @@ router.post('/',
   (req, res) => {
     return res.status(200).json(res.locals.response);
   }
-    
-
 ) 
+
+router.get('/',
+  project.fetchProjects,
+  (req, res) => {
+    return res.status(200).json(res.locals.response)
+  }
+)
 export default router;
 
