@@ -8,6 +8,7 @@ import RegisterServiceForm from './components/RegisterServiceForm';
 import {Layout, Menu} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
+import {Service} from './pages/Services';
 const {Header, Content} = Layout;
 
 function App() {
@@ -53,7 +54,9 @@ function App() {
                       <Route path="/register-service">
                         <RegisterServiceForm />
                       </Route>
-
+                      <Route path="/:projectId/:serviceId">
+                        <Service />
+                      </Route>
                       <Route path="/">
                         <h1>Mosaic</h1>
                       </Route>
