@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
-import {Card, Button} from 'antd';
+import {Row, Col, Card, Button} from 'antd';
 import {
   QuestionCircleOutlined,
   ReloadOutlined,
@@ -41,34 +41,40 @@ function ServiceDetails() {
 
   return (
     <div>
-      <h1>
-        Service Details for {id}: {service.name}
-      </h1>
-      <Card size="small" style={{width: 300}}>
-        <p>
-          <strong>IP Address:</strong> {service.ipAddress}
-        </p>
-        <p>
-          <strong>Host:</strong> {service.host}
-        </p>
-      </Card>
-      <Card size="small" title={'Status: ' + status} style={{width: 300}}>
-        <p>{status === 'Pending' && <QuestionCircleOutlined className="anticon--large" />}</p>
-        <p>{status === 'Active' && <CheckCircleOutlined className="anticon--large" />}</p>
-        <p>{status === 'Inactive' && <WarningOutlined className="anticon--large" />}</p>
-      </Card>
-      <Card size="small" title={'Updated: ' + lastUpdated} style={{width: 300}}>
-        <p>
-          <Button
-            type="primary"
-            shape="round"
-            icon={<ReloadOutlined />}
-            size={'small'}
-            onClick={() => getServiceStatus()}>
-            Refresh
-          </Button>
-        </p>
-      </Card>
+      <h1>{service.name}</h1>
+      <Row>
+        <Col span={8}>
+          <Card size="small" title="Location" style={{width: 300}}>
+            <p>
+              <strong>IP Address:</strong> {service.ipAddress}
+            </p>
+            <p>
+              <strong>Host:</strong> {service.host}
+            </p>
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card size="small" title={'Status: ' + status} style={{width: 300}}>
+            <p>{status === 'Pending' && <QuestionCircleOutlined className="anticon--large" />}</p>
+            <p>{status === 'Active' && <CheckCircleOutlined className="anticon--large" />}</p>
+            <p>{status === 'Inactive' && <WarningOutlined className="anticon--large" />}</p>
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card size="small" title={'Updated: ' + lastUpdated} style={{width: 300}}>
+            <p>
+              <Button
+                type="primary"
+                shape="round"
+                icon={<ReloadOutlined />}
+                size={'large'}
+                onClick={() => getServiceStatus()}>
+                Refresh
+              </Button>
+            </p>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }
