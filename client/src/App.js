@@ -25,7 +25,7 @@ function App() {
           <div>
             <Header className="header">
               <div className="logo" />
-              <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['3']}>
+              <Menu theme="dark" mode="horizontal">
                 <Menu.Item key="1">
                   <Link to="/">Home</Link>
                 </Menu.Item>
@@ -36,7 +36,7 @@ function App() {
                   <Link to="/dashboard"> Dashboard </Link>
                 </Menu.Item>
                 <Menu.Item key="4" style={{position: 'absolute', right: 88}}>
-                  <Link to="/user-settings"> Carlos </Link>
+                  <Link to="/user-settings">Welcome Back, Carlos</Link>
                 </Menu.Item>
                 <Link to="/user-settings">
                   <Avatar

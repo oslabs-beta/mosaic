@@ -1,5 +1,5 @@
 import {Layout, Menu} from 'antd';
-import {UserOutlined, LaptopOutlined, SettingOutlined} from '@ant-design/icons';
+import {LaptopOutlined, SettingOutlined} from '@ant-design/icons';
 import './Dashboard.css';
 import {Link} from 'react-router-dom';
 
@@ -14,11 +14,11 @@ function SideMenu() {
         defaultOpenKeys={['sub1']}
         style={{height: '100%', borderRight: 0}}>
         <Menu.Item icon={<LaptopOutlined />} key="1">
-          Logs
+          <Link to="/custom-events">Logs</Link>
         </Menu.Item>
-        <Menu.Item icon={<UserOutlined />} key="2">
+        {/* <Menu.Item icon={<UserOutlined />} key="2">
           <Link to="/custom-events">Custom Events</Link>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item icon={<SettingOutlined />} key="3">
           Settings
         </Menu.Item>
