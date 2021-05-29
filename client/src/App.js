@@ -68,6 +68,9 @@ function App() {
                       <Route path="/custom-events">
                         <CustomEvents />
                       </Route>
+                      <Route path="/settings">
+                        <h1>Settings</h1>
+                      </Route>
                       <Route path="/">
                         <Projects />
                       </Route>

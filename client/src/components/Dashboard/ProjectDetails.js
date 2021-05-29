@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import axios from 'axios';
 import {Row, Col, Card, Button, Tabs} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
@@ -34,14 +34,16 @@ const ProjectDetails = () => {
       <Row gutter={30}>
         <Col span={8}>
           <Card size="small" className="card--centered">
-            <Button
-              type="primary"
-              shape="round"
-              icon={<PlusCircleOutlined />}
-              size="large"
-              onClick={() => console.log('Register Service')}>
-              Register Service
-            </Button>
+            <Link to="/register-service">
+              <Button
+                type="primary"
+                shape="round"
+                icon={<PlusCircleOutlined />}
+                size="large"
+                onClick={() => console.log('Register Service')}>
+                Register Service
+              </Button>
+            </Link>
           </Card>
         </Col>
         <Col span={8}>
