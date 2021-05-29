@@ -9,6 +9,7 @@ import RegisterServiceForm from './components/RegisterServiceForm';
 import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
+import ProjectDetails from './components/Dashboard/ProjectDetails';
 import CustomEvents from './components/Dashboard/CustomEvents';
 
 // pages
@@ -64,6 +65,9 @@ function App() {
                       minHeight: 280,
                     }}>
                     <Switch>
+                      <Route path="/dashboard/project-details/:id">
+                        <ProjectDetails />
+                      </Route>
                       <Route path="/dashboard">
                         <Projects />
                       </Route>
