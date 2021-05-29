@@ -33,12 +33,13 @@ function Projects() {
   const projectRows = [];
   for (let i = 0; i < projects.length; i += 3) {
     projectRows.push(projects.slice(i, i + 3));
+    console.log(projectRows);
   }
 
   return (
     <div className="site-card-wrapper">
-      <Row gutter={16}>
-        <Col span={8}>
+      <Row gutter={16} style={{marginBottom: '16px'}}>
+        <Col span={24}>
           <Card className="card--centered">
             <Button
               type="primary"
@@ -50,38 +51,6 @@ function Projects() {
             </Button>
           </Card>
         </Col>
-        <Button
-          type="primary"
-          shape="round"
-          icon={<FileAddOutlined />}
-          size={'small'}
-          style={{marginBottom: '20px'}}
-          onClick={() => setIsCreateProjectOpen(true)}>
-          Add Project
-        </Button>
-
-        {projectRows.map((row, i) => (
-          <Row key={i} gutter={16} style={{marginBottom: '16px'}}>
-            {row.map((project) => (
-              <Col key={project.id} span={8}>
-                <Card
-                  title={
-                    <Link to={`/dashboard/project-details/${project._id}`}>{project.name}</Link>
-                  }>
-                  {project.description}
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        ))}
-        {/* <Row gutter={16}>
-        <Col span={8}>
-          <Card title="Card title">Card content</Card>
-        </Col>
-        <Col span={8}>
-          <Card title="Card title">Card content</Card>
-        </Col>
-      </Row> */}
 
         <CreateProjectForm
           visible={isCreateProjectOpen}
@@ -89,6 +58,21 @@ function Projects() {
           onCancel={() => setIsCreateProjectOpen(false)}
         />
       </Row>
+
+      {projectRows.splice(0, 2).map((row, i) => (
+        <Row key={i} gutter={16} style={{marginBottom: '16px'}}>
+          {row.map((project) => (
+            <Col key={project.id} span={8}>
+              <Card
+                title={
+                  <Link to={`/dashboard/project-details/${project._id}`}>{project.name}</Link>
+                }>
+                {project.description}
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      ))}
     </div>
   );
 }

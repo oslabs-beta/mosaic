@@ -29,18 +29,9 @@ function App() {
           <div>
             <Header className="header">
               <div className="logo" />
-              <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['3']}>
-                <Menu.Item key="1">
-                  <Link to="/">Home</Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Link to="/register-service">Register Service</Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Link to="/dashboard"> Dashboard </Link>
-                </Menu.Item>
+              <Menu theme="dark" mode="horizontal">
                 <Menu.Item key="4" style={{position: 'absolute', right: 88}}>
-                  <Link to="/user-settings"> Carlos </Link>
+                  <Link to="/user-settings">Welcome Back, Carlos</Link>
                 </Menu.Item>
                 <Link to="/user-settings">
                   <Avatar
@@ -68,9 +59,6 @@ function App() {
                       <Route path="/dashboard/project-details/:id">
                         <ProjectDetails />
                       </Route>
-                      <Route path="/dashboard">
-                        <Projects />
-                      </Route>
                       <Route path="/register-service">
                         <RegisterServiceForm />
                       </Route>
@@ -80,8 +68,11 @@ function App() {
                       <Route path="/custom-events">
                         <CustomEvents />
                       </Route>
+                      <Route path="/settings">
+                        <h1>Settings</h1>
+                      </Route>
                       <Route path="/">
-                        <h1>Mosaic</h1>
+                        <Projects />
                       </Route>
                     </Switch>
                   </Content>
