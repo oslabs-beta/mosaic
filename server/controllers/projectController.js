@@ -21,7 +21,43 @@ projectController.createProject = (req, res, next) => {
           message: err,
         },
       });
-    });
+    })
+};
+
+projectController.fetchProjects = (req, res, next) => {
+  Project.find({})
+    .then((data) =>{
+      res.locals.response = data;
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: `Fetch projects - ERROR: ${err}`,
+        message: {
+          err: 'Error occured in projectController.fetchProjects',
+          message: err,
+        },
+      });
+    })
+};
+
+projectController.fetchProject = (req, res, next) => {
+  const { id } = req.params;
+
+  Project.find({_id: id})
+    .then((data) =>{
+      res.locals.response = data[0];
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: `Fetch project - ERROR: ${err}`,
+        message: {
+          err: 'Error occured in projectController.fetchProject',
+          message: err,
+        },
+      });
+    })
 };
 
 export default projectController;
