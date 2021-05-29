@@ -55,7 +55,8 @@ const ProjectDetails = () => {
       name: 'service 12',
       version: '1.0.0',
       dependencies: '',
-      status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+      // status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+      status: <Badge count="Pending" style={{backgroundColor: '#cccccc', color: 'black'}} />,
       actions: <Link to="/service/60b1914b12394d5148f8194e">View</Link>,
     },
   ];
