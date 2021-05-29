@@ -9,4 +9,10 @@ router.post('/register', serviceController.registerService, (req, res) => {
   res.status(200).json(res.locals.response);
 });
 
+router.get('/:id', serviceController.findServiceById, (req, res) => {
+  console.log('find service router is working');
+  console.log(res.locals.response);
+  res.status(200).json(res.locals.response);
+});
+
 export default router;

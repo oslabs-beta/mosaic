@@ -3,10 +3,7 @@ import {options} from './helpers';
 
 const Schema = mongoose.Schema;
 const {
-  Types: {
-    ObjectId,
-    String,
-  }
+  Types: {ObjectId, String},
 } = Schema;
 
 const ServiceSchema = new Schema(
@@ -42,7 +39,7 @@ const ServiceSchema = new Schema(
     },
     description: {
       type: String,
-      default: "",
+      default: '',
     },
     projectId: {
       type: ObjectId,
@@ -53,4 +50,4 @@ const ServiceSchema = new Schema(
 );
 
 const Service = mongoose.model('services', ServiceSchema);
-export default {Service};
+export default Service;

@@ -1,15 +1,22 @@
 import {Form, Input, Button} from 'antd';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 // import {useState} from 'react';
 
 function RegisterServiceForm() {
+  let history = useHistory();
+
   const onFinish = (values) => {
     console.log('Success:', values);
     axios
       .post('http://localhost:8080/service/register', {
         ...values,
       })
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        const id = response.data._id;
+        history.push(`/service/${id}`);
+      })
       .catch((error) => console.log(error));
   };
 

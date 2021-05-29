@@ -37,30 +37,44 @@ function Projects() {
 
   return (
     <div className="site-card-wrapper">
-      <Button
-        type="primary"
-        shape="round"
-        icon={<FileAddOutlined />}
-        size={'small'}
-        style={{marginBottom: '20px'}}
-        onClick={() => setIsCreateProjectOpen(true)}>
-        Add Project
-      </Button>
-      {projectRows.map((row, i) => (
-        <Row key={i} gutter={16} style={{marginBottom: '16px'}}>
-          {row.map((project) => (
-            <Col key={project.id} span={8}>
-              <Card
-                title={
-                  <Link to={`/dashboard/project-details/${project._id}`}>{project.name}</Link>
-                }>
-                {project.description}
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      ))}
-      {/* <Row gutter={16}>
+      <Row gutter={16}>
+        <Col span={8}>
+          <Card className="card--centered">
+            <Button
+              type="primary"
+              shape="round"
+              icon={<FileAddOutlined />}
+              size={'large'}
+              onClick={() => setIsCreateProjectOpen(true)}>
+              Add Project
+            </Button>
+          </Card>
+        </Col>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<FileAddOutlined />}
+          size={'small'}
+          style={{marginBottom: '20px'}}
+          onClick={() => setIsCreateProjectOpen(true)}>
+          Add Project
+        </Button>
+
+        {projectRows.map((row, i) => (
+          <Row key={i} gutter={16} style={{marginBottom: '16px'}}>
+            {row.map((project) => (
+              <Col key={project.id} span={8}>
+                <Card
+                  title={
+                    <Link to={`/dashboard/project-details/${project._id}`}>{project.name}</Link>
+                  }>
+                  {project.description}
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        ))}
+        {/* <Row gutter={16}>
         <Col span={8}>
           <Card title="Card title">Card content</Card>
         </Col>
@@ -69,11 +83,12 @@ function Projects() {
         </Col>
       </Row> */}
 
-      <CreateProjectForm
-        visible={isCreateProjectOpen}
-        onCreate={onCreate}
-        onCancel={() => setIsCreateProjectOpen(false)}
-      />
+        <CreateProjectForm
+          visible={isCreateProjectOpen}
+          onCreate={onCreate}
+          onCancel={() => setIsCreateProjectOpen(false)}
+        />
+      </Row>
     </div>
   );
 }
