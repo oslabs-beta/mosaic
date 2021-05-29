@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Button, Tabs} from 'antd';
+import {Row, Col, Card, Button, Tabs, Table, Badge} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
 import {DependencyMap} from '../DependencyMap';
 
@@ -26,7 +26,51 @@ const ProjectDetails = () => {
     getProject();
   }, []);
 
-  console.log(project);
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+    },
+    {
+      title: 'Dependencies',
+      dataIndex: 'dependencies',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+    },
+  ];
+
+  const dataSource = [
+    {
+      key: '1',
+      name: 'service 12',
+      version: '1.0.0',
+      dependencies: '',
+      status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+      actions: <Link to="/service/60b1914b12394d5148f8194e">View</Link>,
+    },
+  ];
+
+  // const data =
+  //   project.services &&
+  //   project.services.map((service) => {
+  //     return {
+  //       name: service,
+  //       version: '1.0.0',
+  //       dependencies: '',
+  //       status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+  //       actions: 'View',
+  //     };
+  //   });
 
   return (
     <div>
@@ -80,9 +124,8 @@ const ProjectDetails = () => {
               <p>
                 <strong>Services:</strong>
               </p>
-              <p>
-                <Link to="/service/60b1914b12394d5148f8194e">Service 12</Link>
-              </p>
+
+              <Table columns={columns} dataSource={dataSource} bordered />
             </TabPane>
             <TabPane tab="Dependency Map" key="2">
               <DependencyMap />
