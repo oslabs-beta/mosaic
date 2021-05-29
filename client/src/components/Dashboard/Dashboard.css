@@ -23,3 +23,34 @@
 .site-layout-background {
   background: #fff;
 }
+
+.ant-card {
+  min-height: 250px;
+}
+
+.ant-card-small {
+  min-height: 130px;
+}
+
+.card--centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .ant-card-small > .ant-card-body, */
+.ant-card-body {
+  text-align: center;
+}
+
+.ant-card-head-title {
+  text-align: center;
+}
+
+.anticon--large {
+  font-size: 50px;
+}
+
+.serviceTabsContainer {
+  margin-top: 50px;
+}

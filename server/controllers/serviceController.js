@@ -21,11 +21,31 @@ serviceController.registerService = (req, res, next) => {
       next();
     })
     .catch((error) => {
-      console.log('inside create: ', error);
+      console.log('inside service create: ', error);
       next({
         log: `Register Service - ERROR: ${error}`,
         message: {
           err: 'Error occured in serviceController.registerService',
+          message: error,
+        },
+      });
+    });
+};
+
+serviceController.findServiceById = (req, res, next) => {
+  const {id} = req.params;
+
+  Service.findById(id)
+    .then((data) => {
+      res.locals.response = data;
+      console.log('serviceController.findServiceById:', 'service found');
+      next();
+    })
+    .catch((error) => {
+      next({
+        log: `Find Service by ID - ERROR: ${error}`,
+        message: {
+          err: 'Error occured in serviceController.findServiceById',
           message: error,
         },
       });
