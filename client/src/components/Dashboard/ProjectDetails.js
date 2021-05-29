@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Button, Tabs} from 'antd';
+import {Row, Col, Card, Button, Tabs, Table, Badge} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
 import {DependencyMap} from '../DependencyMap';
 
@@ -26,7 +26,40 @@ const ProjectDetails = () => {
     getProject();
   }, []);
 
-  console.log(project);
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+    },
+    {
+      title: 'Dependencies',
+      dataIndex: 'dependencies',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+    },
+  ];
+
+  const data =
+    project.services &&
+    project.services.map((service) => {
+      return {
+        name: service,
+        version: '1.0.0',
+        dependencies: '',
+        status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+        actions: 'View',
+      };
+    });
 
   return (
     <div>
@@ -77,9 +110,7 @@ const ProjectDetails = () => {
         <Col span={24}>
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Services" key="1">
-              <p>
-                <strong>Services:</strong>
-              </p>
+              <Table columns={columns} dataSource={data} bordered />
             </TabPane>
             <TabPane tab="Dependency Map" key="2">
               <DependencyMap />
