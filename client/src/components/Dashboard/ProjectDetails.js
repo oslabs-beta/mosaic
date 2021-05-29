@@ -49,17 +49,28 @@ const ProjectDetails = () => {
     },
   ];
 
-  const data =
-    project.services &&
-    project.services.map((service) => {
-      return {
-        name: service,
-        version: '1.0.0',
-        dependencies: '',
-        status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
-        actions: 'View',
-      };
-    });
+  const dataSource = [
+    {
+      key: '1',
+      name: 'service 12',
+      version: '1.0.0',
+      dependencies: '',
+      status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+      actions: <Link to="/service/60b1914b12394d5148f8194e">View</Link>,
+    },
+  ];
+
+  // const data =
+  //   project.services &&
+  //   project.services.map((service) => {
+  //     return {
+  //       name: service,
+  //       version: '1.0.0',
+  //       dependencies: '',
+  //       status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
+  //       actions: 'View',
+  //     };
+  //   });
 
   return (
     <div>
@@ -110,7 +121,11 @@ const ProjectDetails = () => {
         <Col span={24}>
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Services" key="1">
-              <Table columns={columns} dataSource={data} bordered />
+              <p>
+                <strong>Services:</strong>
+              </p>
+
+              <Table columns={columns} dataSource={dataSource} bordered />
             </TabPane>
             <TabPane tab="Dependency Map" key="2">
               <DependencyMap />
