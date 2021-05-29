@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Button} from 'antd';
+import {Row, Col, Card, Button, Tabs} from 'antd';
 import {
   QuestionCircleOutlined,
   ReloadOutlined,
@@ -12,6 +12,12 @@ import {
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 TimeAgo.addDefaultLocale(en);
+
+const {TabPane} = Tabs;
+
+const callback = (key) => {
+  console.log('tab changed:', key);
+};
 
 function ServiceDetails() {
   const {id} = useParams();
@@ -73,6 +79,27 @@ function ServiceDetails() {
               </Button>
             </p>
           </Card>
+        </Col>
+      </Row>
+
+      <Row className="serviceTabsContainer">
+        <Col span={24}>
+          <Tabs defaultActiveKey="1" onChange={callback}>
+            <TabPane tab="Overview" key="1">
+              <p>
+                <strong>Description:</strong> {service.description}
+              </p>
+              <p>
+                <strong>Version:</strong> {service.version}
+              </p>
+            </TabPane>
+            <TabPane tab="Events" key="2">
+              Events...
+            </TabPane>
+            <TabPane tab="Dependencies" key="3">
+              Dependencies...
+            </TabPane>
+          </Tabs>
         </Col>
       </Row>
     </div>
