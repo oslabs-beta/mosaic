@@ -80,6 +80,9 @@ const ProjectDetails = () => {
               <p>
                 <strong>Services:</strong>
               </p>
+              <p>
+                <Link to="/service/60b1914b12394d5148f8194e">Service 12</Link>
+              </p>
             </TabPane>
             <TabPane tab="Dependency Map" key="2">
               <DependencyMap />
