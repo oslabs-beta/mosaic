@@ -60,4 +60,23 @@ projectController.fetchProject = (req, res, next) => {
     })
 };
 
+
+projectController.deleteProject = (req, res, next) => {
+  const {id} = req.params;
+
+  Project.findOneAndDelete({_id: id})
+    .then((data) => {
+      next();
+    })
+    .catch((err) => {
+      next({
+        log: `Delete project - ERROR: ${err}`,
+        message: {
+          err: 'Error occured in projectController.deleteProject',
+          message: err,
+        },
+      });
+    });
+};
+
 export default projectController;
