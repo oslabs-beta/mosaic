@@ -23,5 +23,10 @@ router.get('/:id',
     return res.status(200).json(res.locals.response);
   }
 )
+
+router.delete('/:id', project.deleteProject, (req, res) => {
+  return res.sendStatus(200);
+});
+
 export default router;
 

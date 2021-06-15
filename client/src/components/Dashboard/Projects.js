@@ -13,8 +13,12 @@ function Projects() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const projects = await axios.get('http://localhost:8080/projects');
-      setProjects(projects.data);
+      try {
+        const projects = await axios.get('http://localhost:8080/projects');
+        setProjects(projects.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchProjects();
   }, []);
@@ -33,7 +37,6 @@ function Projects() {
   const projectRows = [];
   for (let i = 0; i < projects.length; i += 3) {
     projectRows.push(projects.slice(i, i + 3));
-    console.log(projectRows);
   }
 
   return (

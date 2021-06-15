@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
-import {useParams, Link} from 'react-router-dom';
+import {useParams, Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Button, Tabs, Table, Badge} from 'antd';
+import {Row, Col, Card, Button, Tabs, Table, Badge, Modal} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
 import {DependencyMap} from '../DependencyMap';
 
@@ -14,6 +14,15 @@ const callback = (key) => {
 const ProjectDetails = () => {
   const {id} = useParams();
   const [project, setProject] = useState({});
+  const [isDeleteProjectOpen, setIsDeleteProjectOpen] = useState(false);
+  const history = useHistory();
+
+  const handleDelete = () => {
+    axios
+      .delete(`http://localhost:8080/projects/${id}`)
+      .then(() => history.push('/'))
+      .catch((error) => console.log(error));
+  };
 
   useEffect(() => {
     const getProject = async () => {
@@ -111,7 +120,7 @@ const ProjectDetails = () => {
               shape="round"
               icon={<StopOutlined />}
               size="large"
-              onClick={() => console.log('Delete Project')}>
+              onClick={() => setIsDeleteProjectOpen(true)}>
               Delete Project
             </Button>
           </Card>
@@ -134,6 +143,15 @@ const ProjectDetails = () => {
           </Tabs>
         </Col>
       </Row>
+      <Modal
+        title="Confirm Project Deletion"
+        okText="Delete"
+        okButtonProps={{danger: true}}
+        visible={isDeleteProjectOpen}
+        onOk={handleDelete}
+        onCancel={() => setIsDeleteProjectOpen(false)}>
+        <p>Are you sure you want to delete {project.name}? This cannot be undone.</p>
+      </Modal>
     </div>
   );
 };
