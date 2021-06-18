@@ -52,4 +52,25 @@ serviceController.findServiceById = (req, res, next) => {
     });
 };
 
+serviceController.updateServiceById = (req, res, next) => {
+  console.log('update service req body: ', req.body);
+  const {id, status} = req.body;
+
+  Service.findByIdAndUpdate(id, {status: status})
+    .then((data) => {
+      res.locals.response = data;
+      console.log('serviceController.updateServiceById:', 'service updated');
+      next();
+    })
+    .catch((error) => {
+      next({
+        log: `Update Service by ID - ERROR: ${error}`,
+        message: {
+          err: 'Error occured in serviceController.updateServiceById',
+          message: error,
+        },
+      });
+    });
+};
+
 export default serviceController;

@@ -42,17 +42,28 @@ function ServiceDetails() {
 
   // TO DO: update this to get status from service and save to DB
   // 1. Ping service at IP Address
-  // 2. Save Status to DB
-  // 3. Update Status in UI
+  // 2. Done - Save Status to DB
+  // 3. Done - Update Status in UI
   const pingService = () => {
     console.log('inside pingService');
 
     const p = new Ping();
 
-    p.ping('http://google.comz')
+    p.ping('http://google.com')
       .then((data) => {
         console.log('Successful ping: ' + data);
         setStatus('Active');
+      })
+      .then(() => {
+        axios
+          .put('http://localhost:8080/service/update', {
+            id,
+            status: 'Active',
+          })
+          .then((response) => {
+            console.log('put response:', response.data);
+          })
+          .catch((error) => console.log(error));
       })
       .catch((data) => {
         console.error('Ping failed: ' + data);
