@@ -27,7 +27,7 @@ function ServiceDetails() {
   const [status, setStatus] = useState('');
 
   const timeAgo = new TimeAgo('en-US');
-  // TO DO: get data from DB and Reformat lastUpdated
+  // TO DO: get date from DB and Reformat lastUpdated
   const [lastUpdated, setLastUpdated] = useState(
     timeAgo.format(new Date('2021-05-28T19:45:33.903Z')),
   );
