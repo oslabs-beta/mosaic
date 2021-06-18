@@ -27,6 +27,7 @@ function ServiceDetails() {
   const [status, setStatus] = useState('');
 
   const timeAgo = new TimeAgo('en-US');
+  // TO DO: get data from DB and Reformat lastUpdated
   const [lastUpdated, setLastUpdated] = useState(
     timeAgo.format(new Date('2021-05-28T19:45:33.903Z')),
   );
@@ -40,16 +41,11 @@ function ServiceDetails() {
     findService();
   }, []);
 
-  // TO DO: update this to get status from service and save to DB
-  // 1. Ping service at IP Address
-  // 2. Done - Save Status to DB
-  // 3. Done - Update Status in UI
+  // ping service at IP Address, save status to DB, update status in UI
   const pingService = () => {
-    console.log('inside pingService');
-
     const p = new Ping();
 
-    p.ping('http://google.com')
+    p.ping('http://google.comz')
       .then((data) => {
         console.log('Successful ping: ' + data);
         setStatus('Active');
@@ -72,13 +68,10 @@ function ServiceDetails() {
   };
 
   const getServiceStatus = () => {
-    console.log(`pinging service: ${service.ipAddress}`);
     pingService();
 
     const newDate = timeAgo.format(new Date());
-    // const newStatus = status === 'Pending' ? 'Active' : 'Inactive';
     setLastUpdated(newDate);
-    // setStatus(newStatus);
   };
 
   return (
@@ -104,7 +97,7 @@ function ServiceDetails() {
         </Col>
         <Col span={8}>
           <Card size="small" title={'Updated: ' + lastUpdated} style={{width: 300}}>
-            <p>
+            <p style={{marginTop: 15}}>
               <Button
                 type="primary"
                 shape="round"
