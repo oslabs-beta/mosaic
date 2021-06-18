@@ -19,6 +19,8 @@ const callback = (key) => {
   console.log('tab changed:', key);
 };
 
+import Ping from 'ping.js';
+
 function ServiceDetails() {
   const {id} = useParams();
   const [service, setService] = useState({});
@@ -38,7 +40,28 @@ function ServiceDetails() {
     findService();
   }, []);
 
+  // TO DO: update this to get status from service and save to DB
+  // 1. Ping service at IP Address
+  // 2. Save Status to DB
+  // 3. Update Status in UI
+  const pingService = () => {
+    console.log('inside pingService');
+
+    const p = new Ping();
+
+    p.ping('http://google.com')
+      .then((data) => {
+        console.log('Successful ping: ' + data);
+      })
+      .catch((data) => {
+        console.error('Ping failed: ' + data);
+      });
+  };
+
   const getServiceStatus = () => {
+    console.log(`pinging service: ${service.ipAddress}`);
+    pingService();
+
     const newDate = timeAgo.format(new Date());
     const newStatus = status === 'Pending' ? 'Active' : 'Inactive';
     setLastUpdated(newDate);
