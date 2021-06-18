@@ -49,12 +49,14 @@ function ServiceDetails() {
 
     const p = new Ping();
 
-    p.ping('http://google.com')
+    p.ping('http://google.comz')
       .then((data) => {
         console.log('Successful ping: ' + data);
+        setStatus('Active');
       })
       .catch((data) => {
         console.error('Ping failed: ' + data);
+        setStatus('Inactive');
       });
   };
 
@@ -63,9 +65,9 @@ function ServiceDetails() {
     pingService();
 
     const newDate = timeAgo.format(new Date());
-    const newStatus = status === 'Pending' ? 'Active' : 'Inactive';
+    // const newStatus = status === 'Pending' ? 'Active' : 'Inactive';
     setLastUpdated(newDate);
-    setStatus(newStatus);
+    // setStatus(newStatus);
   };
 
   return (
