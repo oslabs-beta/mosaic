@@ -19,12 +19,15 @@ const callback = (key) => {
   console.log('tab changed:', key);
 };
 
+import Ping from 'ping.js';
+
 function ServiceDetails() {
   const {id} = useParams();
   const [service, setService] = useState({});
   const [status, setStatus] = useState('');
 
   const timeAgo = new TimeAgo('en-US');
+  // TO DO: get date from DB and Reformat lastUpdated
   const [lastUpdated, setLastUpdated] = useState(
     timeAgo.format(new Date('2021-05-28T19:45:33.903Z')),
   );
@@ -38,11 +41,37 @@ function ServiceDetails() {
     findService();
   }, []);
 
+  // ping service at IP Address, save status to DB, update status in UI
+  const pingService = () => {
+    const p = new Ping();
+
+    p.ping('http://google.comz')
+      .then((data) => {
+        console.log('Successful ping: ' + data);
+        setStatus('Active');
+      })
+      .then(() => {
+        axios
+          .put('http://localhost:8080/service/update', {
+            id,
+            status: 'Active',
+          })
+          .then((response) => {
+            console.log('put response:', response.data);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((data) => {
+        console.error('Ping failed: ' + data);
+        setStatus('Inactive');
+      });
+  };
+
   const getServiceStatus = () => {
+    pingService();
+
     const newDate = timeAgo.format(new Date());
-    const newStatus = status === 'Pending' ? 'Active' : 'Inactive';
     setLastUpdated(newDate);
-    setStatus(newStatus);
   };
 
   return (
@@ -68,7 +97,7 @@ function ServiceDetails() {
         </Col>
         <Col span={8}>
           <Card size="small" title={'Updated: ' + lastUpdated} style={{width: 300}}>
-            <p>
+            <p style={{marginTop: 15}}>
               <Button
                 type="primary"
                 shape="round"

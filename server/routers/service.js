@@ -15,4 +15,10 @@ router.get('/:id', serviceController.findServiceById, (req, res) => {
   res.status(200).json(res.locals.response);
 });
 
+router.put('/update', serviceController.updateServiceById, (req, res) => {
+  console.log('update service router is working');
+  console.log(res.locals.response);
+  res.status(200).json(res.locals.response);
+});
+
 export default router;
