@@ -63,9 +63,9 @@ function Projects() {
       </Row>
 
       {projectRows.splice(0, 2).map((row, i) => (
-        <Row key={i} gutter={16} style={{marginBottom: '16px'}}>
+        <Row key={`Row - ${i}`} gutter={16} style={{marginBottom: '16px'}}>
           {row.map((project) => (
-            <Col key={project.id} span={8}>
+            <Col key={`Project - ${project._id}`} span={8}>
               <Card
                 title={
                   <Link to={`/dashboard/project-details/${project._id}`}>{project.name}</Link>

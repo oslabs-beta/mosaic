@@ -11,7 +11,6 @@ const ServiceSchema = new Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     version: {
       type: String,
