@@ -3,6 +3,7 @@ import {useParams, Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import {Row, Col, Card, Button, Tabs, Table, Badge, Modal} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
+import {useProjectContext} from '../providers/Project';
 import {DependencyMap} from '../DependencyMap';
 
 const {TabPane} = Tabs;
@@ -13,7 +14,7 @@ const callback = (key) => {
 
 const ProjectDetails = () => {
   const {id} = useParams();
-  const [project, setProject] = useState({});
+  const {projectState, setProjectState} = useProjectContext();
   const [isDeleteProjectOpen, setIsDeleteProjectOpen] = useState(false);
   const history = useHistory();
 
@@ -28,7 +29,9 @@ const ProjectDetails = () => {
     const getProject = async () => {
       axios
         .get(`http://localhost:8080/projects/${id}`)
-        .then((project) => setProject(project.data))
+        .then((project) => {
+          setProjectState(project.data);
+        })
         .catch((error) => console.log(error));
     };
 
@@ -58,33 +61,19 @@ const ProjectDetails = () => {
     },
   ];
 
-  const dataSource = [
-    {
-      key: '1',
-      name: 'service 12',
-      version: '1.0.0',
-      dependencies: '',
-      // status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
-      status: <Badge count="Pending" style={{backgroundColor: '#cccccc', color: 'black'}} />,
+  const getServicesData = () =>
+    projectState?.services?.map(({_id, name, version, dependency, status}) => ({
+      key: _id,
+      name,
+      version,
+      dependencies: dependency.length ? dependency : '',
+      status: <Badge count={status} style={{backgroundColor: '#cccccc', color: 'black'}} />,
       actions: <Link to="/service/60b1914b12394d5148f8194e">View</Link>,
-    },
-  ];
-
-  // const data =
-  //   project.services &&
-  //   project.services.map((service) => {
-  //     return {
-  //       name: service,
-  //       version: '1.0.0',
-  //       dependencies: '',
-  //       status: <Badge count="Active" style={{backgroundColor: '#389E0D'}} />,
-  //       actions: 'View',
-  //     };
-  //   });
+    }));
 
   return (
     <div>
-      <h1>{project.name}</h1>
+      <h1>{projectState.name}</h1>
       <Row gutter={30}>
         <Col span={8}>
           <Card size="small" className="card--centered">
@@ -135,7 +124,7 @@ const ProjectDetails = () => {
                 <strong>Services:</strong>
               </p>
 
-              <Table columns={columns} dataSource={dataSource} bordered />
+              <Table columns={columns} dataSource={getServicesData()} bordered />
             </TabPane>
             <TabPane tab="Dependency Map" key="2">
               <DependencyMap />
@@ -150,7 +139,7 @@ const ProjectDetails = () => {
         visible={isDeleteProjectOpen}
         onOk={handleDelete}
         onCancel={() => setIsDeleteProjectOpen(false)}>
-        <p>Are you sure you want to delete {project.name}? This cannot be undone.</p>
+        <p>Are you sure you want to delete {projectState.name}? This cannot be undone.</p>
       </Modal>
     </div>
   );

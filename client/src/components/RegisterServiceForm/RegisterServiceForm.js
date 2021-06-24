@@ -1,16 +1,18 @@
 import {Form, Input, Button} from 'antd';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
-// import {useState} from 'react';
+import {useProjectContext} from '../providers/Project';
 
 function RegisterServiceForm() {
   let history = useHistory();
-
+  const {
+    projectState: {_id: projectId},
+  } = useProjectContext();
   const onFinish = (values) => {
-    console.log('Success:', values);
     axios
       .post('http://localhost:8080/service/register', {
         ...values,
+        projectId,
       })
       .then((response) => {
         console.log(response);

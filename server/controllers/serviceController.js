@@ -1,35 +1,58 @@
 import Service from '../models/ServiceModel';
+import Project from '../models/ProjectModel';
 const serviceController = {};
 
-serviceController.registerService = (req, res, next) => {
+serviceController.registerService = async (req, res, next) => {
   const {name, description, version, ipAddress, host, status, projectId} = req.body;
 
-  Service.create({
-    name,
-    version,
-    ipAddress,
-    host,
-    status: status || 'Pending',
-    dependency: [],
-    events: [],
-    description,
-    projectId: projectId || '60a7210af2ee8c64dc1f611a',
-  })
-    .then((data) => {
-      res.locals.response = data;
-      console.log('serviceController.registerService:', 'service registered');
-      next();
-    })
-    .catch((error) => {
-      console.log('inside service create: ', error);
+  try {
+    const existingService = await Service.findOne({name});
+    if (existingService && existingService.projectId === projectId) {
       next({
-        log: `Register Service - ERROR: ${error}`,
+        status: 400, 
+        log: `Register Service - ERROR: A service with the duplicate name exists`,
         message: {
           err: 'Error occured in serviceController.registerService',
-          message: error,
+          message: 'A service with the duplicate name exists',
         },
       });
+    } else {
+      const newService = await Service.create({
+        name,
+        version,
+        ipAddress,
+        host,
+        status: status || 'Pending',
+        dependency: [],
+        events: [],
+        description,
+        projectId: projectId || '60a7210af2ee8c64dc1f611a',
+      });
+      res.locals.response = newService;
+      console.log('serviceController.registerService:', 'service registered');
+
+      const updatedProject = await Project.findByIdAndUpdate(
+        projectId, 
+        {
+          $push: {
+            services: newService._id
+          }
+        }
+      ).exec();
+      console.log('serviceController.registerService:', 'service pushed into the project\'s services');
+      next();
+    }
+
+  } catch (error) {
+    console.log('inside service create: ', error);
+    next({
+      log: `Register Service - ERROR: ${error}`,
+      message: {
+        err: 'Error occured in serviceController.registerService',
+        message: error,
+      },
     });
+  }
 };
 
 serviceController.findServiceById = (req, res, next) => {

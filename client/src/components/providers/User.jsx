@@ -23,8 +23,6 @@ const Provider = ({children}) => {
     fetchUser();
   }, []);
 
-  console.log(userState);
-
   return <UserContext.Provider value={contextValues}>{children}</UserContext.Provider>;
 };
 
