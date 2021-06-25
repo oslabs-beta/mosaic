@@ -25,6 +25,7 @@
     "mongoose": "^5.12.9"
   },
   "devDependencies": {
+    "@testing-library/react": "^11.2.7",
     "concurrently": "^6.1.0"
   }
 }
