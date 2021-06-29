@@ -12,12 +12,14 @@ import "./models/UserModel";
 import "./models/EventModel";
 import "./models/ProjectModel";
 import "./models/ServiceModel";
+import "./models/CustomEventsModel";
 import "./services/passport";
 
 // Routes Imports
 import authRouter from "./routers/auth";
 import projectRouter from "./routers/project";
 import serviceRouter from "./routers/service";
+import customEventRouter from "./routers/customEvent";
 
 // Environment Variables
 dotenv.config();
@@ -66,6 +68,7 @@ app.use(passport.session());
 app.use('/auth', authRouter);
 app.use('/projects', projectRouter);
 app.use('/service', serviceRouter);
+app.use('/customEvent', customEventRouter);
 
 app.use((err, req, res, next) => {
   const defaultErr = {
