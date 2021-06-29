@@ -24,7 +24,7 @@ const ProjectSchema = new Schema(
       default: "",
     },
     services: {
-      type: [String],
+      type: [ObjectId],
       default: [],
     },
     serviceCount: {

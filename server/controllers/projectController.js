@@ -45,7 +45,12 @@ projectController.fetchProject = (req, res, next) => {
   const { id } = req.params;
 
   Project.find({_id: id})
+    .populate({
+      path: 'services',
+      model: 'services'
+    })
     .then((data) =>{
+      console.log(data);
       res.locals.response = data[0];
       next();
     })

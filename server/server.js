@@ -73,12 +73,11 @@ app.use('/customEvent', customEventRouter);
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
-    status: 500,
+    status: err.statusCode ?? 500,
     message: {err: `An error occurred - ${err}`},
   };
   const errorObj = {...defaultErr, ...err};
-  console.log(errorObj.status, errorObj.message);
-  return res.status(errorObj.status).send(errorObj.message.err);
+  return res.status(errorObj.status).send(`${errorObj.message.err} - ${errorObj.message.message}`);
 });
 
 const startServer = () => {
