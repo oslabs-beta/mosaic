@@ -1,6 +1,6 @@
 import './App.css';
 import {Switch, Route, Link} from 'react-router-dom';
-import {User, Project} from './components/providers';
+import {User, Project} from './providers';
 import {GoogleSignInButton} from './components/GoogleSignInButton';
 import {UserOutlined} from '@ant-design/icons';
 
@@ -9,10 +9,10 @@ import RegisterServiceForm from './components/RegisterServiceForm';
 import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
-import ProjectDetails from './components/Dashboard/ProjectDetails';
 import CustomEvents from './components/Dashboard/CustomEvents';
 
 // pages
+import ProjectDetails from './pages/ProjectDetails';
 import ServiceDetails from './pages/ServiceDetails';
 
 const {Header, Content} = Layout;

@@ -1,0 +1,18 @@
+.projectInfoCard {
+  padding-left: 0px;
+}
+.textLeftAligned {
+  text-align: left;
+}
+.serviceTabsContainer {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.button {
+  width: 100%;
+}

@@ -7,11 +7,11 @@ import {
   ReloadOutlined,
   CheckCircleOutlined,
   WarningOutlined,
+  SettingFilled,
 } from '@ant-design/icons';
-
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-TimeAgo.addDefaultLocale(en);
+import Ping from 'ping.js';
 
 const {TabPane} = Tabs;
 
@@ -19,14 +19,14 @@ const callback = (key) => {
   console.log('tab changed:', key);
 };
 
-import Ping from 'ping.js';
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo('en-US');
 
 function ServiceDetails() {
   const {id} = useParams();
   const [service, setService] = useState({});
   const [status, setStatus] = useState('');
 
-  const timeAgo = new TimeAgo('en-US');
   // TO DO: get date from DB and Reformat lastUpdated
   const [lastUpdated, setLastUpdated] = useState(
     timeAgo.format(new Date('2021-05-28T19:45:33.903Z')),
@@ -77,35 +77,52 @@ function ServiceDetails() {
   return (
     <div>
       <h1>{service.name}</h1>
-      <Row>
-        <Col span={8}>
-          <Card size="small" title="Location" style={{width: 300}}>
+      <Row gutter={[10, 10]}>
+        <Col md={24} lg={8}>
+          <Card size="small" title="Location">
             <p>
               <strong>IP Address:</strong> {service.ipAddress}
             </p>
             <p>
               <strong>Host:</strong> {service.host}
             </p>
+            <Button
+              ghost
+              type="primary"
+              shape="round"
+              icon={<SettingFilled />}
+              size="large"
+              onClick={() => console.log('Edit Project Info')}>
+              Edit Service Info
+            </Button>
           </Card>
         </Col>
-        <Col span={8}>
-          <Card size="small" title={'Status: ' + status} style={{width: 300}}>
+        <Col md={24} lg={8}>
+          <Card size="small" title={'Status: ' + status}>
             <p>{status === 'Pending' && <QuestionCircleOutlined className="anticon--large" />}</p>
             <p>{status === 'Active' && <CheckCircleOutlined className="anticon--large" />}</p>
             <p>{status === 'Inactive' && <WarningOutlined className="anticon--large" />}</p>
+            <Button
+              type="primary"
+              shape="round"
+              icon={<ReloadOutlined />}
+              size={'large'}
+              onClick={() => getServiceStatus()}>
+              Refresh
+            </Button>
           </Card>
         </Col>
-        <Col span={8}>
-          <Card size="small" title={'Updated: ' + lastUpdated} style={{width: 300}}>
+        <Col md={24} lg={8}>
+          <Card size="small" title={'Updated: ' + lastUpdated}>
             <p style={{marginTop: 15}}>
-              <Button
+              {/* <Button
                 type="primary"
                 shape="round"
                 icon={<ReloadOutlined />}
                 size={'large'}
                 onClick={() => getServiceStatus()}>
                 Refresh
-              </Button>
+              </Button> */}
             </p>
           </Card>
         </Col>

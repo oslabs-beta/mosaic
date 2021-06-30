@@ -1,7 +1,7 @@
 import {Form, Input, Button} from 'antd';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
-import {useProjectContext} from '../providers/Project';
+import {useProjectContext} from '../../providers/Project';
 
 function RegisterServiceForm() {
   let history = useHistory();

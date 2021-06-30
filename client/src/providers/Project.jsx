@@ -17,7 +17,7 @@ const Provider = ({children}) => {
 const useProjectContext = () => {
   const contextValues = useContext(ProjectContext);
   if (!contextValues) {
-    throw new Error('useUserContext must be used within ProjectContextProvider');
+    throw new Error('useProjectContext must be used within ProjectContextProvider');
   }
   return contextValues;
 };
