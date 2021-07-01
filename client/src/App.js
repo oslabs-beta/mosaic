@@ -5,7 +5,7 @@ import {GoogleSignInButton} from './components/GoogleSignInButton';
 import {UserOutlined} from '@ant-design/icons';
 
 // components
-import RegisterServiceForm from './components/RegisterServiceForm';
+import ServiceDetailsForm from './components/ServiceDetailsForm';
 import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
@@ -61,7 +61,10 @@ function App() {
                           <ProjectDetails />
                         </Route>
                         <Route path="/register-service">
-                          <RegisterServiceForm />
+                          <ServiceDetailsForm />
+                        </Route>
+                        <Route path="/edit-service/:id">
+                          <ServiceDetailsForm />
                         </Route>
                         <Route path="/service/:id">
                           <ServiceDetails />

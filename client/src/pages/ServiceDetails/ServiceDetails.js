@@ -1,19 +1,28 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Button, Tabs} from 'antd';
+import {Row, Col, Button, Tabs, Typography, Spin, Modal} from 'antd';
 import {
   QuestionCircleOutlined,
   ReloadOutlined,
   CheckCircleOutlined,
   WarningOutlined,
   SettingFilled,
+  StopOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
+import {useProjectContext} from '../../providers/Project';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Ping from 'ping.js';
+import css from './serviceDetails.module.css';
+
+const PENDING = 'Pending';
+const ACTIVE = 'Active';
+const INACTIVE = 'Inactive';
 
 const {TabPane} = Tabs;
+const {Title} = Typography;
 
 const callback = (key) => {
   console.log('tab changed:', key);
@@ -23,131 +32,188 @@ TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
 function ServiceDetails() {
+  const {projectState} = useProjectContext();
+  const history = useHistory();
   const {id} = useParams();
+  const [fetching, setFetching] = useState(false);
+  const [error, setError] = useState(null);
   const [service, setService] = useState({});
   const [status, setStatus] = useState('');
-
-  // TO DO: get date from DB and Reformat lastUpdated
-  const [lastUpdated, setLastUpdated] = useState(
-    timeAgo.format(new Date('2021-05-28T19:45:33.903Z')),
-  );
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
   useEffect(() => {
     const findService = async () => {
-      const service = await axios.get(`http://localhost:8080/service/${id}`);
-      setService(service.data);
-      setStatus(service.data.status);
+      try {
+        setFetching(true);
+        const {data} = await axios.get(`http://localhost:8080/service/${id}`);
+        setService(data);
+        setStatus(data.status);
+        setLastUpdated(data.updatedAt);
+        setFetching(false);
+      } catch (e) {
+        console.error(e);
+        setError(e);
+      }
     };
     findService();
   }, []);
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:8080/service/${id}/${projectState._id}`);
+      history.replace('/');
+    } catch (e) {
+      console.error(e);
+      setError(e);
+    }
+  };
+
   // ping service at IP Address, save status to DB, update status in UI
-  const pingService = () => {
+  const pingService = async () => {
     const p = new Ping();
 
-    p.ping('http://google.comz')
-      .then((data) => {
-        console.log('Successful ping: ' + data);
-        setStatus('Active');
-      })
-      .then(() => {
-        axios
-          .put('http://localhost:8080/service/update', {
-            id,
-            status: 'Active',
-          })
-          .then((response) => {
-            console.log('put response:', response.data);
-          })
-          .catch((error) => console.log(error));
-      })
-      .catch((data) => {
-        console.error('Ping failed: ' + data);
-        setStatus('Inactive');
-      });
+    try {
+      setFetching(true);
+      const data = await p.ping('http://google.com');
+      console.log('Successful ping: ' + data);
+      setStatus('Active');
+      // const res = await axios.put('http://localhost:8080/service/update', {
+      //   id,
+      //   status: 'Active',
+      // });
+      setFetching(false);
+    } catch (e) {
+      console.error(e);
+      setError(e);
+      setStatus('Inactive');
+    }
   };
 
   const getServiceStatus = () => {
     pingService();
 
-    const newDate = timeAgo.format(new Date());
+    const newDate = new Date();
     setLastUpdated(newDate);
   };
 
+  if (error) {
+    return null;
+  }
+
   return (
     <div>
-      <h1>{service.name}</h1>
-      <Row gutter={[10, 10]}>
-        <Col md={24} lg={8}>
-          <Card size="small" title="Location">
-            <p>
-              <strong>IP Address:</strong> {service.ipAddress}
-            </p>
-            <p>
-              <strong>Host:</strong> {service.host}
-            </p>
-            <Button
-              ghost
-              type="primary"
-              shape="round"
-              icon={<SettingFilled />}
-              size="large"
-              onClick={() => console.log('Edit Project Info')}>
-              Edit Service Info
-            </Button>
-          </Card>
-        </Col>
-        <Col md={24} lg={8}>
-          <Card size="small" title={'Status: ' + status}>
-            <p>{status === 'Pending' && <QuestionCircleOutlined className="anticon--large" />}</p>
-            <p>{status === 'Active' && <CheckCircleOutlined className="anticon--large" />}</p>
-            <p>{status === 'Inactive' && <WarningOutlined className="anticon--large" />}</p>
-            <Button
-              type="primary"
-              shape="round"
-              icon={<ReloadOutlined />}
-              size={'large'}
-              onClick={() => getServiceStatus()}>
-              Refresh
-            </Button>
-          </Card>
-        </Col>
-        <Col md={24} lg={8}>
-          <Card size="small" title={'Updated: ' + lastUpdated}>
-            <p style={{marginTop: 15}}>
-              {/* <Button
-                type="primary"
-                shape="round"
-                icon={<ReloadOutlined />}
-                size={'large'}
-                onClick={() => getServiceStatus()}>
-                Refresh
-              </Button> */}
-            </p>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="serviceTabsContainer">
-        <Col span={24}>
-          <Tabs defaultActiveKey="1" onChange={callback}>
-            <TabPane tab="Overview" key="1">
-              <p>
-                <strong>Description:</strong> {service.description}
+      <div className={css.spinnerContainer}>
+        <Spin spinning={fetching} tip="Loading..." />
+      </div>
+      {!fetching && (
+        <>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} lg={18}>
+              <Title level={3}>{service.name}</Title>
+              <p className={css.textLeftAligned}>
+                <strong>Description: </strong>
+                {service.description}
               </p>
-              <p>
-                <strong>Version:</strong> {service.version}
+              <p className={css.textLeftAligned}>
+                <strong>Version: </strong>
+                {service.version}
               </p>
-            </TabPane>
-            <TabPane tab="Events" key="2">
-              Events...
-            </TabPane>
-            <TabPane tab="Dependencies" key="3">
-              Dependencies...
-            </TabPane>
-          </Tabs>
-        </Col>
-      </Row>
+              <p className={css.textLeftAligned}>
+                <strong>IP Address: </strong>
+                {service.ipAddress}
+              </p>
+              <p className={css.textLeftAligned}>
+                <strong>Host: </strong>
+                {service.host}
+              </p>
+              <p className={css.textLeftAligned}>
+                <strong>Status: </strong>
+                <span>
+                  {status}
+                  {status === PENDING && <QuestionCircleOutlined className="anticon--small" />}
+                  {status === ACTIVE && <CheckCircleOutlined className="anticon--small" />}
+                  {status === INACTIVE && <WarningOutlined className="anticon--small" />}
+                </span>
+              </p>
+              <p className={css.textLeftAligned}>
+                <strong>Last Updated: </strong>
+                {lastUpdated ? timeAgo.format(new Date(lastUpdated)) : null}
+              </p>
+            </Col>
+            <Col xs={24} lg={6}>
+              <Row gutter={[16, 16]}>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    ghost
+                    type="primary"
+                    shape="round"
+                    icon={<SettingFilled />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => history.push(`/edit-service/${id}`)}>
+                    Edit Service Info
+                  </Button>
+                </Col>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    icon={<PlusCircleOutlined />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => console.log('Add Dependency')}>
+                    Add Dependency
+                  </Button>
+                </Col>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    icon={<ReloadOutlined />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => getServiceStatus()}>
+                    Refresh
+                  </Button>
+                </Col>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    danger
+                    shape="round"
+                    icon={<StopOutlined />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => setIsDeleteConfirmationOpen(true)}>
+                    Delete Service
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <Row className="serviceTabsContainer">
+            <Col span={24}>
+              <Tabs defaultActiveKey="1" onChange={callback}>
+                <TabPane tab="Events" key="1">
+                  Events...
+                </TabPane>
+                <TabPane tab="Dependencies" key="2">
+                  Dependencies...
+                </TabPane>
+              </Tabs>
+            </Col>
+          </Row>
+          <Modal
+            title="Confirm Service Deletion"
+            okText="Delete"
+            okButtonProps={{danger: true}}
+            visible={isDeleteConfirmationOpen}
+            onOk={handleDelete}
+            onCancel={() => setIsDeleteConfirmationOpen(false)}>
+            <p>Are you sure you want to delete {service.name}? This cannot be undone.</p>
+          </Modal>
+        </>
+      )}
     </div>
   );
 }

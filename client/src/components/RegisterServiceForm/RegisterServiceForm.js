@@ -10,7 +10,7 @@ function RegisterServiceForm() {
   } = useProjectContext();
   const onFinish = (values) => {
     axios
-      .post('http://localhost:8080/service/register', {
+      .post('http://localhost:8080/service/', {
         ...values,
         projectId,
       })

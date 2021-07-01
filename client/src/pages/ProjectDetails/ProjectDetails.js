@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams, Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Tabs, Table, Button, Badge, Modal, Typography} from 'antd';
+import {Row, Col, Card, Tabs, Table, Button, Badge, Modal, Typography, Spin} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
 import {useProjectContext} from '../../providers/Project';
 import {DependencyMap} from '../../components/DependencyMap';
@@ -78,93 +78,99 @@ const ProjectDetails = () => {
       actions: <Link to={`/service/${_id}`}>View</Link>,
     }));
 
-  if (fetching || error) {
+  if (error) {
     return null;
   }
 
   return (
     <div>
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={18}>
-          <Title level={3}>{projectState.name}</Title>
-          <p className={css.textLeftAligned}>
-            <strong>Description: </strong>
-            {projectState.description}
-          </p>
-          <p className={css.textLeftAligned}>
-            <strong>Service Count: </strong>
-            {projectState.serviceCount}
-          </p>
-          <p className={css.textLeftAligned}>
-            <strong>Last Updated: </strong>
-            {new Date(projectState.updatedAt).toLocaleString()}
-          </p>
-        </Col>
-        <Col xs={24} lg={6}>
+      <div className={css.spinnerContainer}>
+        <Spin spinning={fetching} tip="Loading..." />
+      </div>
+      {!fetching && (
+        <>
           <Row gutter={[16, 16]}>
-            <Col sm={24} className={css.buttonContainer}>
-              <Button
-                type="primary"
-                shape="round"
-                icon={<PlusCircleOutlined />}
-                size="middle"
-                className={css.button}
-                onClick={() => history.push('/register-service')}>
-                Register Service
-              </Button>
+            <Col xs={24} lg={18}>
+              <Title level={3}>{projectState.name}</Title>
+              <p className={css.textLeftAligned}>
+                <strong>Description: </strong>
+                {projectState.description}
+              </p>
+              <p className={css.textLeftAligned}>
+                <strong>Service Count: </strong>
+                {projectState.serviceCount}
+              </p>
+              <p className={css.textLeftAligned}>
+                <strong>Last Updated: </strong>
+                {new Date(projectState.updatedAt).toLocaleString()}
+              </p>
             </Col>
-            <Col sm={24} className={css.buttonContainer}>
-              <Button
-                ghost
-                type="primary"
-                shape="round"
-                icon={<SettingFilled />}
-                size="middle"
-                className={css.button}
-                onClick={() => console.log('Edit Project Info')}>
-                Edit Project Info
-              </Button>
-            </Col>
-            <Col sm={24} className={css.buttonContainer}>
-              <Button
-                danger
-                shape="round"
-                icon={<StopOutlined />}
-                size="middle"
-                className={css.button}
-                onClick={() => setIsDeleteProjectOpen(true)}>
-                Delete Project
-              </Button>
+            <Col xs={24} lg={6}>
+              <Row gutter={[16, 16]}>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    icon={<PlusCircleOutlined />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => history.push('/register-service')}>
+                    Register Service
+                  </Button>
+                </Col>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    ghost
+                    type="primary"
+                    shape="round"
+                    icon={<SettingFilled />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => console.log('Edit Project Info')}>
+                    Edit Project Info
+                  </Button>
+                </Col>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    danger
+                    shape="round"
+                    icon={<StopOutlined />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => setIsDeleteProjectOpen(true)}>
+                    Delete Project
+                  </Button>
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
+          <Row className={css.serviceTabsContainer}>
+            <Col span={24}>
+              <Tabs defaultActiveKey="1" onChange={callback}>
+                <TabPane tab="Services" key="1">
+                  <p>
+                    <strong>Services:</strong>
+                  </p>
 
-      <Row className={css.serviceTabsContainer}>
-        <Col span={24}>
-          <Tabs defaultActiveKey="1" onChange={callback}>
-            <TabPane tab="Services" key="1">
-              <p>
-                <strong>Services:</strong>
-              </p>
-
-              <Table columns={columns} dataSource={getServicesData()} bordered />
-            </TabPane>
-            <TabPane tab="Dependency Map" key="2">
-              <DependencyMap />
-            </TabPane>
-          </Tabs>
-        </Col>
-      </Row>
-      <Modal
-        title="Confirm Project Deletion"
-        okText="Delete"
-        okButtonProps={{danger: true}}
-        visible={isDeleteProjectOpen}
-        onOk={handleDelete}
-        onCancel={() => setIsDeleteProjectOpen(false)}>
-        <p>Are you sure you want to delete {projectState.name}? This cannot be undone.</p>
-      </Modal>
+                  <Table columns={columns} dataSource={getServicesData()} bordered />
+                </TabPane>
+                <TabPane tab="Dependency Map" key="2">
+                  <DependencyMap />
+                </TabPane>
+              </Tabs>
+            </Col>
+          </Row>
+          <Modal
+            title="Confirm Project Deletion"
+            okText="Delete"
+            okButtonProps={{danger: true}}
+            visible={isDeleteProjectOpen}
+            onOk={handleDelete}
+            onCancel={() => setIsDeleteProjectOpen(false)}>
+            <p>Are you sure you want to delete {projectState.name}? This cannot be undone.</p>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };

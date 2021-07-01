@@ -16,3 +16,12 @@
 .button {
   width: 100%;
 }
+.spinnerContainer {
+  border: 1px solid;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  bottom: 50%;
+}
