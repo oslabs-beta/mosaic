@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
-import {Form, Input, Button, Spin} from 'antd';
+import {Form, Input, Button, Spin, Typography} from 'antd';
 import axios from 'axios';
 import {useProjectContext} from '../../providers/Project';
 import css from './serviceDetails.module.css';
+
+const {Title} = Typography;
 
 function ServiceDetailsForm() {
   const {id} = useParams();
@@ -44,7 +46,7 @@ function ServiceDetailsForm() {
         });
         setServiceInfo(data);
         setSubmitting(false);
-        history.push(`/service/${id}`);
+        history.push(`/service/${data._id}`);
       } catch (e) {
         console.log(e);
         setError(e);
@@ -84,7 +86,7 @@ function ServiceDetailsForm() {
       </div>
       {!submitting && (
         <>
-          <h1>Service Info Form</h1>
+          <Title level={3}>Service Info Form</Title>
           <Form
             layout="vertical"
             name="registerServiceForm"
