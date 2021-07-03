@@ -9,7 +9,7 @@ import ServiceDetailsForm from './components/ServiceDetailsForm';
 import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
-import CustomEvents from './components/Dashboard/CustomEvents';
+import CustomEvents from './components/CustomEvents';
 
 // pages
 import ProjectDetails from './pages/ProjectDetails';
@@ -32,7 +32,7 @@ function App() {
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal">
                   <Menu.Item key="4" style={{position: 'absolute', right: 88}}>
-                    <Link to="/user-settings">Welcome Back, Carlos</Link>
+                    <Link to="/user-settings">Welcome Back, Matt</Link>
                   </Menu.Item>
                   <Link to="/user-settings">
                     <Avatar

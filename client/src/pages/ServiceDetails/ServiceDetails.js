@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Button, Tabs, Typography, Spin, Modal} from 'antd';
+import {Row, Col, Button, Tabs, Typography, Spin, Modal, Drawer, Tag} from 'antd';
 import {
   QuestionCircleOutlined,
   ReloadOutlined,
@@ -11,10 +11,11 @@ import {
   StopOutlined,
   PlusCircleOutlined,
 } from '@ant-design/icons';
-import {useProjectContext} from '../../providers/Project';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import Ping from 'ping.js';
+import {useProjectContext} from '../../providers/Project';
+import DependencyDetailsForm from '../../components/DependencyDetailsForm';
 import css from './serviceDetails.module.css';
 
 const PENDING = 'Pending';
@@ -23,6 +24,14 @@ const INACTIVE = 'Inactive';
 
 const {TabPane} = Tabs;
 const {Title} = Typography;
+
+const buildServiceIdMap = (services) => {
+  const obj = {};
+  services.forEach((service) => {
+    obj[service._id] = service;
+  });
+  return obj;
+};
 
 const callback = (key) => {
   console.log('tab changed:', key);
@@ -41,6 +50,8 @@ function ServiceDetails() {
   const [status, setStatus] = useState('');
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [serviceIdMap, setServiceIdMap] = useState(buildServiceIdMap(projectState?.services));
 
   useEffect(() => {
     const findService = async () => {
@@ -109,7 +120,7 @@ function ServiceDetails() {
       {!fetching && (
         <>
           <Row gutter={[16, 16]}>
-            <Col xs={24} lg={18}>
+            <Col xs={24} lg={17}>
               <Title level={3}>{service.name}</Title>
               <p className={css.textLeftAligned}>
                 <strong>Description: </strong>
@@ -140,8 +151,14 @@ function ServiceDetails() {
                 <strong>Last Updated: </strong>
                 {lastUpdated ? timeAgo.format(new Date(lastUpdated)) : null}
               </p>
+              <div>
+                <strong>Dependencies: </strong>
+                {service?.dependency?.map((dependencyId) => (
+                  <Tag key={dependencyId}>{serviceIdMap[dependencyId].name}</Tag>
+                ))}
+              </div>
             </Col>
-            <Col xs={24} lg={6}>
+            <Col xs={24} lg={7}>
               <Row gutter={[16, 16]}>
                 <Col sm={24} className={css.buttonContainer}>
                   <Button
@@ -162,9 +179,24 @@ function ServiceDetails() {
                     icon={<PlusCircleOutlined />}
                     size="middle"
                     className={css.button}
-                    onClick={() => console.log('Add Dependency')}>
-                    Add Dependency
+                    onClick={() => setDrawerVisible(true)}>
+                    Update Dependency
                   </Button>
+                  <Drawer
+                    title="Update Dependency"
+                    placement="right"
+                    closable
+                    width={400}
+                    onClose={() => setDrawerVisible(false)}
+                    visible={drawerVisible}>
+                    <DependencyDetailsForm
+                      serviceInfo={service}
+                      setServiceInfo={setService}
+                      dependencyOptions={projectState.services.map(
+                        (element) => serviceIdMap[element._id],
+                      )}
+                    />
+                  </Drawer>
                 </Col>
                 <Col sm={24} className={css.buttonContainer}>
                   <Button

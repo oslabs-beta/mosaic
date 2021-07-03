@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams, Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Card, Tabs, Table, Button, Badge, Modal, Typography, Spin} from 'antd';
+import {Row, Col, Tabs, Table, Button, Badge, Modal, Typography, Spin, Tag} from 'antd';
 import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
 import {useProjectContext} from '../../providers/Project';
 import {DependencyMap} from '../../components/DependencyMap';
@@ -9,6 +9,14 @@ import css from './projectDetails.module.css';
 
 const {TabPane} = Tabs;
 const {Title, Text} = Typography;
+
+const buildServiceIdMap = (services) => {
+  const obj = {};
+  services.forEach(({_id, name}) => {
+    obj[_id] = name;
+  });
+  return obj;
+};
 
 const callback = (key) => {
   console.log('tab changed:', key);
@@ -43,6 +51,7 @@ const ProjectDetails = () => {
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
   const [isDeleteProjectOpen, setIsDeleteProjectOpen] = useState(false);
+  const [serviceIdMap, setServiceIdMap] = useState({});
   const history = useHistory();
 
   const handleDelete = () => {
@@ -58,7 +67,7 @@ const ProjectDetails = () => {
         setFetching(true);
         const {data} = await axios.get(`http://localhost:8080/projects/${id}`);
         setProjectState(data);
-        console.log(data);
+        setServiceIdMap(buildServiceIdMap(data?.services));
         setFetching(false);
       } catch (e) {
         setError(e);
@@ -73,7 +82,13 @@ const ProjectDetails = () => {
       key: _id,
       name,
       version,
-      dependencies: dependency.length ? dependency : '',
+      dependencies: (
+        <>
+          {dependency?.map((dependencyId) => (
+            <Tag key={dependencyId}>{serviceIdMap[dependencyId]}</Tag>
+          ))}
+        </>
+      ),
       status: <Badge count={status} style={{backgroundColor: '#cccccc', color: 'black'}} />,
       actions: <Link to={`/service/${_id}`}>View</Link>,
     }));

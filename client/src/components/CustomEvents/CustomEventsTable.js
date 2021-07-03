@@ -1,6 +1,6 @@
 import {Table} from 'antd';
 import {useEffect, useState} from 'react';
-import './Dashboard.css';
+// import '../Dashboard.css';
 import axios from 'axios';
 
 function CustomEventsTable() {

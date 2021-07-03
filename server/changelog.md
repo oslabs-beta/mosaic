@@ -1,5 +1,8 @@
 <!-- add PR # and description -->
 
+### Jul 3
+- [] Add Update/Delete functionality on ServiceDetails page
+- [] Add Update Dependency functionality 
 ### June 21
 - [] Remove unique flag from name field in service model
 - [] Update serviceController.registerService controller to handle duplicatation validation for the same-name services
