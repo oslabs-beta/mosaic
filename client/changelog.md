@@ -1,5 +1,11 @@
 <!-- add PR # and description -->
 
+### Jul 3
+- [] Update the UIs a bit to make rooms in ProjectDetails & ServiceDetails pages
+- [] Update RegisterServiceForm to be ServiceDetailsForm to be reusable both for adding service & updating service
+- [] Add Update/Delete functionality on ServiceDetails page
+- [] Add Update Dependency functionality with a form in pop-drawer
+- [] Show dependencies as tags
 ### May 28
 - [] Add draft Project details & draft dependency map
 ### May 22

@@ -36,13 +36,15 @@ serviceController.registerService = async (req, res, next) => {
         {
           $push: {
             services: newService._id
+          },
+          $inc: {
+            serviceCount: 1
           }
         }
       ).exec();
       console.log('serviceController.registerService:', 'service pushed into the project\'s services');
       next();
     }
-
   } catch (error) {
     console.log('inside service create: ', error);
     next({
@@ -75,25 +77,58 @@ serviceController.findServiceById = (req, res, next) => {
     });
 };
 
-serviceController.updateServiceById = (req, res, next) => {
+serviceController.updateServiceById = async (req, res, next) => {
   console.log('update service req body: ', req.body);
-  const {id, status} = req.body;
+  const {id} = req.params;
 
-  Service.findByIdAndUpdate(id, {status: status})
-    .then((data) => {
-      res.locals.response = data;
-      console.log('serviceController.updateServiceById:', 'service updated');
-      next();
-    })
-    .catch((error) => {
-      next({
-        log: `Update Service by ID - ERROR: ${error}`,
-        message: {
-          err: 'Error occured in serviceController.updateServiceById',
-          message: error,
-        },
-      });
+  try {
+    const newService = await Service.findByIdAndUpdate(id, req.body);
+    res.locals.response = newService;
+    console.log('serviceController.updateServiceById:', 'service updated');
+    next();
+  } catch (e) {
+    next({
+      log: `Update Service by ID - ERROR: ${error}`,
+      message: {
+        err: 'Error occured in serviceController.updateServiceById',
+        message: error,
+      },
     });
+  }
 };
+
+serviceController.deleteServiceById = async (req, res, next) => {
+  console.log('delete service req body: ', req.body);
+  const {id, projectId} = req.params;
+
+  try {
+    const data = await Service.findByIdAndDelete(id);
+    res.locals.response = data;
+    console.log('serviceController.deleteServiceById:', 'service deleted');
+    next();
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId, 
+      {
+        $pull: {
+          services: id
+        },
+        $inc: {
+          serviceCount: -1
+        }
+      }
+    ).exec();
+    console.log('serviceController.deleteServiceById:', 'service removed from the project\'s services');
+    next();
+  } catch (error) {
+    next({
+      log: `Delete Service by ID - ERROR: ${error}`,
+      message: {
+        err: 'Error occured in serviceController.deleteServiceById',
+        message: error,
+      },
+    });
+  }
+}
 
 export default serviceController;

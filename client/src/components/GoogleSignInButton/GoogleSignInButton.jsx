@@ -2,7 +2,7 @@ import {Button} from 'antd';
 import csx from 'classnames';
 import {ReactComponent as Icon} from './google_signin_button.svg';
 import styles from './googleSignInButton.module.css';
-import {useUserContext} from '../providers/User';
+import {useUserContext} from '../../providers/User';
 
 const GoogleSignInButton = () => {
   const {userState} = useUserContext();

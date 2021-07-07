@@ -1,18 +1,18 @@
 import './App.css';
 import {Switch, Route, Link} from 'react-router-dom';
-import {User, Project} from './components/providers';
+import {User, Project} from './providers';
 import {GoogleSignInButton} from './components/GoogleSignInButton';
 import {UserOutlined} from '@ant-design/icons';
 
 // components
-import RegisterServiceForm from './components/RegisterServiceForm';
+import ServiceDetailsForm from './components/ServiceDetailsForm';
 import {Layout, Menu, Avatar} from 'antd';
 import SideMenu from './components/Dashboard/SideMenu';
 import Projects from './components/Dashboard/Projects';
-import ProjectDetails from './components/Dashboard/ProjectDetails';
-import CustomEvents from './components/Dashboard/CustomEvents';
+import CustomEvents from './components/CustomEvents';
 
 // pages
+import ProjectDetails from './pages/ProjectDetails';
 import ServiceDetails from './pages/ServiceDetails';
 
 const {Header, Content} = Layout;
@@ -32,7 +32,7 @@ function App() {
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal">
                   <Menu.Item key="4" style={{position: 'absolute', right: 88}}>
-                    <Link to="/user-settings">Welcome Back, Carlos</Link>
+                    <Link to="/user-settings">Welcome Back, Matt</Link>
                   </Menu.Item>
                   <Link to="/user-settings">
                     <Avatar
@@ -61,7 +61,10 @@ function App() {
                           <ProjectDetails />
                         </Route>
                         <Route path="/register-service">
-                          <RegisterServiceForm />
+                          <ServiceDetailsForm />
+                        </Route>
+                        <Route path="/edit-service/:id">
+                          <ServiceDetailsForm />
                         </Route>
                         <Route path="/service/:id">
                           <ServiceDetails />
