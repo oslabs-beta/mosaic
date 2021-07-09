@@ -69,14 +69,14 @@ import styles from './dependencyMap.module.css';
 //   },
 // };
 
-const DependencyMap = () => {
+const DependencyMap = ({dependencyMapData}) => {
   const containerRef = useRef(null);
-
   useEffect(() => {
     let destroyFn;
 
     if (containerRef.current) {
-      const {destroy} = runForceGraph(containerRef.current, mockData);
+      // const {destroy} = runForceGraph(containerRef.current, mockData);
+      const {destroy} = runForceGraph(containerRef.current, dependencyMapData);
       destroyFn = destroy;
     }
 

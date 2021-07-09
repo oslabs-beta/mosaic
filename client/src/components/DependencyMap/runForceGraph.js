@@ -31,10 +31,11 @@ export const runForceGraph = (container, data) => {
     .forceSimulation(nodes)
     .force(
       'link',
-      d3.forceLink(links).id((d) => d.id),
+      d3.forceLink(links).id((d) => d.name),
     )
-    .force('charge', d3.forceManyBody())
-    .force('center', d3.forceCenter(width / 2, height / 2));
+    .force('charge', d3.forceManyBody().strength())
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(50));
 
   const svg = d3.select(container).append('svg').attr('viewBox', [0, 0, width, height]);
 
@@ -47,17 +48,29 @@ export const runForceGraph = (container, data) => {
     .join('line')
     .attr('stroke-width', (d) => Math.sqrt(d.value));
 
-  const node = svg
+  var node = svg
     .append('g')
     .attr('class', 'nodes')
-    .attr('stroke', '#fff')
-    .attr('stroke-width', 1.5)
-    .selectAll('circle')
+    .selectAll('g')
     .data(nodes)
-    .join('circle')
-    .attr('r', 5)
-    .attr('fill', color)
+    .enter()
+    .append('g')
     .call(drag(simulation));
+
+  var circle = node.append('circle').attr('r', 5).attr('fill', color);
+
+  var label = node
+    .append('text')
+    .text(function (d) {
+      return d.name;
+    })
+    .attr('x', 6)
+    .attr('y', 3)
+    .attr('text-anchor', 'start');
+
+  node.append('title').text(function (d) {
+    return d.name;
+  });
 
   simulation.on('tick', () => {
     link
@@ -66,6 +79,14 @@ export const runForceGraph = (container, data) => {
       .attr('x2', (d) => d.target.x)
       .attr('y2', (d) => d.target.y);
     node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
+    circle.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
+    label
+      .attr('x', function (d) {
+        return d.x + 10;
+      })
+      .attr('y', function (d) {
+        return d.y + 5;
+      });
   });
 
   return {

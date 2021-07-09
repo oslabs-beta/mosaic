@@ -1,4 +1,4 @@
-import {useContext, createContext, useEffect, useState} from 'react';
+import {useContext, createContext, useState} from 'react';
 import PropTypes from 'prop-types';
 
 const ProjectContext = createContext();
@@ -35,8 +35,6 @@ const Provider = ({children}) => {
     projectState,
     setProjectState: setValue,
   };
-
-  console.log(projectState);
 
   return <ProjectContext.Provider value={contextValues}>{children}</ProjectContext.Provider>;
 };
