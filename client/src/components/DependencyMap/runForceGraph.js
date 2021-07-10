@@ -57,7 +57,12 @@ export const runForceGraph = (container, data) => {
     .append('g')
     .call(drag(simulation));
 
-  var circle = node.append('circle').attr('r', 5).attr('fill', color);
+  var circle = node
+    .append('circle')
+    .attr('r', 5)
+    .attr('fill', color)
+    .on('mouseover.fade', fade(0.1))
+    .on('mouseout.fade', fade(1));
 
   var label = node
     .append('text')
@@ -88,6 +93,31 @@ export const runForceGraph = (container, data) => {
         return d.y + 5;
       });
   });
+
+  const linkedByIndex = {};
+  links.forEach((d) => {
+    linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
+  });
+
+  function isConnected(a, b) {
+    return (
+      linkedByIndex[`${a.index},${b.index}`] ||
+      linkedByIndex[`${b.index},${a.index}`] ||
+      a.index === b.index
+    );
+  }
+
+  function fade(opacity) {
+    return (event, d) => {
+      node.style('stroke-opacity', function (o) {
+        const thisOpacity = isConnected(d, o) ? 1 : opacity;
+        this.setAttribute('fill-opacity', thisOpacity);
+        return thisOpacity;
+      });
+
+      link.style('stroke-opacity', (o) => (o.source === d || o.target === d ? 1 : opacity));
+    };
+  }
 
   return {
     destroy: () => {

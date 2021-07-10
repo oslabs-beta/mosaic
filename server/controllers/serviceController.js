@@ -106,20 +106,6 @@ serviceController.deleteServiceById = async (req, res, next) => {
     res.locals.response = data;
     console.log('serviceController.deleteServiceById:', 'service deleted');
     next();
-
-    const updatedProject = await Project.findByIdAndUpdate(
-      projectId, 
-      {
-        $pull: {
-          services: id
-        },
-        $inc: {
-          serviceCount: -1
-        }
-      }
-    ).exec();
-    console.log('serviceController.deleteServiceById:', 'service removed from the project\'s services');
-    next();
   } catch (error) {
     next({
       log: `Delete Service by ID - ERROR: ${error}`,
