@@ -141,7 +141,7 @@ const ProjectDetails = () => {
     projectState.services.forEach((service) => {
       const p = new Ping();
 
-      p.ping('http://google.com')
+      p.ping(service.ipAddress)
         .then(() => {
           setServiceStatus((prev) => {
             return {...prev, [service._id]: true};
@@ -263,7 +263,10 @@ const ProjectDetails = () => {
             placement="right"
             closable
             width={400}
-            onClose={() => setDrawerVisible(false)}
+            onClose={() => {
+              setDrawerVisible(false);
+              setServiceStatus({});
+            }}
             visible={drawerVisible}>
             <div>
               <Button
