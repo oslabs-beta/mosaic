@@ -1,35 +1,35 @@
 // export const mockData = {
 //   nodes: [
 //     {
-//       id: 'Payments',
+//       name: 'Payments',
 //       group: 1,
 //     },
 //     {
-//       id: 'Billing',
+//       name: 'Billing',
 //       group: 2,
 //     },
 //     {
-//       id: 'Notification',
+//       name: 'Notification',
 //       group: 3,
 //     },
 //     {
-//       id: 'Trip Management',
+//       name: 'Trip Management',
 //       group: 4,
 //     },
 //     {
-//       id: 'Driver Management',
+//       name: 'Driver Management',
 //       group: 5,
 //     },
 //     {
-//       id: 'Passenger Management',
+//       name: 'Passenger Management',
 //       group: 6,
 //     },
 //     {
-//       id: 'Driver Web UI',
+//       name: 'Driver Web UI',
 //       group: 7,
 //     },
 //     {
-//       id: 'Passenger Web UI',
+//       name: 'Passenger Web UI',
 //       group: 8,
 //     },
 //   ],
@@ -75,311 +75,311 @@
 export const mockData = {
   nodes: [
     {
-      id: 'Myriel',
+      name: 'Myriel',
       group: 1,
     },
     {
-      id: 'Napoleon',
+      name: 'Napoleon',
       group: 1,
     },
     {
-      id: 'Mlle.Baptistine',
+      name: 'Mlle.Baptistine',
       group: 1,
     },
     {
-      id: 'Mme.Magloire',
+      name: 'Mme.Magloire',
       group: 1,
     },
     {
-      id: 'CountessdeLo',
+      name: 'CountessdeLo',
       group: 1,
     },
     {
-      id: 'Geborand',
+      name: 'Geborand',
       group: 1,
     },
     {
-      id: 'Champtercier',
+      name: 'Champtercier',
       group: 1,
     },
     {
-      id: 'Cravatte',
+      name: 'Cravatte',
       group: 1,
     },
     {
-      id: 'Count',
+      name: 'Count',
       group: 1,
     },
     {
-      id: 'OldMan',
+      name: 'OldMan',
       group: 1,
     },
     {
-      id: 'Labarre',
+      name: 'Labarre',
       group: 2,
     },
     {
-      id: 'Valjean',
+      name: 'Valjean',
       group: 2,
     },
     {
-      id: 'Marguerite',
+      name: 'Marguerite',
       group: 3,
     },
     {
-      id: 'Mme.deR',
+      name: 'Mme.deR',
       group: 2,
     },
     {
-      id: 'Isabeau',
+      name: 'Isabeau',
       group: 2,
     },
     {
-      id: 'Gervais',
+      name: 'Gervais',
       group: 2,
     },
     {
-      id: 'Tholomyes',
+      name: 'Tholomyes',
       group: 3,
     },
     {
-      id: 'Listolier',
+      name: 'Listolier',
       group: 3,
     },
     {
-      id: 'Fameuil',
+      name: 'Fameuil',
       group: 3,
     },
     {
-      id: 'Blacheville',
+      name: 'Blacheville',
       group: 3,
     },
     {
-      id: 'Favourite',
+      name: 'Favourite',
       group: 3,
     },
     {
-      id: 'Dahlia',
+      name: 'Dahlia',
       group: 3,
     },
     {
-      id: 'Zephine',
+      name: 'Zephine',
       group: 3,
     },
     {
-      id: 'Fantine',
+      name: 'Fantine',
       group: 3,
     },
     {
-      id: 'Mme.Thenardier',
+      name: 'Mme.Thenardier',
       group: 4,
     },
     {
-      id: 'Thenardier',
+      name: 'Thenardier',
       group: 4,
     },
     {
-      id: 'Cosette',
+      name: 'Cosette',
       group: 5,
     },
     {
-      id: 'Javert',
+      name: 'Javert',
       group: 4,
     },
     {
-      id: 'Fauchelevent',
+      name: 'Fauchelevent',
       group: 0,
     },
     {
-      id: 'Bamatabois',
+      name: 'Bamatabois',
       group: 2,
     },
     {
-      id: 'Perpetue',
+      name: 'Perpetue',
       group: 3,
     },
     {
-      id: 'Simplice',
+      name: 'Simplice',
       group: 2,
     },
     {
-      id: 'Scaufflaire',
+      name: 'Scaufflaire',
       group: 2,
     },
     {
-      id: 'Woman1',
+      name: 'Woman1',
       group: 2,
     },
     {
-      id: 'Judge',
+      name: 'Judge',
       group: 2,
     },
     {
-      id: 'Champmathieu',
+      name: 'Champmathieu',
       group: 2,
     },
     {
-      id: 'Brevet',
+      name: 'Brevet',
       group: 2,
     },
     {
-      id: 'Chenildieu',
+      name: 'Chenildieu',
       group: 2,
     },
     {
-      id: 'Cochepaille',
+      name: 'Cochepaille',
       group: 2,
     },
     {
-      id: 'Pontmercy',
+      name: 'Pontmercy',
       group: 4,
     },
     {
-      id: 'Boulatruelle',
+      name: 'Boulatruelle',
       group: 6,
     },
     {
-      id: 'Eponine',
+      name: 'Eponine',
       group: 4,
     },
     {
-      id: 'Anzelma',
+      name: 'Anzelma',
       group: 4,
     },
     {
-      id: 'Woman2',
+      name: 'Woman2',
       group: 5,
     },
     {
-      id: 'MotherInnocent',
+      name: 'MotherInnocent',
       group: 0,
     },
     {
-      id: 'Gribier',
+      name: 'Gribier',
       group: 0,
     },
     {
-      id: 'Jondrette',
+      name: 'Jondrette',
       group: 7,
     },
     {
-      id: 'Mme.Burgon',
+      name: 'Mme.Burgon',
       group: 7,
     },
     {
-      id: 'Gavroche',
+      name: 'Gavroche',
       group: 8,
     },
     {
-      id: 'Gillenormand',
+      name: 'Gillenormand',
       group: 5,
     },
     {
-      id: 'Magnon',
+      name: 'Magnon',
       group: 5,
     },
     {
-      id: 'Mlle.Gillenormand',
+      name: 'Mlle.Gillenormand',
       group: 5,
     },
     {
-      id: 'Mme.Pontmercy',
+      name: 'Mme.Pontmercy',
       group: 5,
     },
     {
-      id: 'Mlle.Vaubois',
+      name: 'Mlle.Vaubois',
       group: 5,
     },
     {
-      id: 'Lt.Gillenormand',
+      name: 'Lt.Gillenormand',
       group: 5,
     },
     {
-      id: 'Marius',
+      name: 'Marius',
       group: 8,
     },
     {
-      id: 'BaronessT',
+      name: 'BaronessT',
       group: 5,
     },
     {
-      id: 'Mabeuf',
+      name: 'Mabeuf',
       group: 8,
     },
     {
-      id: 'Enjolras',
+      name: 'Enjolras',
       group: 8,
     },
     {
-      id: 'Combeferre',
+      name: 'Combeferre',
       group: 8,
     },
     {
-      id: 'Prouvaire',
+      name: 'Prouvaire',
       group: 8,
     },
     {
-      id: 'Feuilly',
+      name: 'Feuilly',
       group: 8,
     },
     {
-      id: 'Courfeyrac',
+      name: 'Courfeyrac',
       group: 8,
     },
     {
-      id: 'Bahorel',
+      name: 'Bahorel',
       group: 8,
     },
     {
-      id: 'Bossuet',
+      name: 'Bossuet',
       group: 8,
     },
     {
-      id: 'Joly',
+      name: 'Joly',
       group: 8,
     },
     {
-      id: 'Grantaire',
+      name: 'Grantaire',
       group: 8,
     },
     {
-      id: 'MotherPlutarch',
+      name: 'MotherPlutarch',
       group: 9,
     },
     {
-      id: 'Gueulemer',
+      name: 'Gueulemer',
       group: 4,
     },
     {
-      id: 'Babet',
+      name: 'Babet',
       group: 4,
     },
     {
-      id: 'Claquesous',
+      name: 'Claquesous',
       group: 4,
     },
     {
-      id: 'Montparnasse',
+      name: 'Montparnasse',
       group: 4,
     },
     {
-      id: 'Toussaint',
+      name: 'Toussaint',
       group: 5,
     },
     {
-      id: 'Child1',
+      name: 'Child1',
       group: 10,
     },
     {
-      id: 'Child2',
+      name: 'Child2',
       group: 10,
     },
     {
-      id: 'Brujon',
+      name: 'Brujon',
       group: 4,
     },
     {
-      id: 'Mme.Hucheloup',
+      name: 'Mme.Hucheloup',
       group: 8,
     },
   ],

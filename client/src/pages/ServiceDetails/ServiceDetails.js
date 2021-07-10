@@ -192,6 +192,7 @@ function ServiceDetails() {
                     <DependencyDetailsForm
                       serviceInfo={service}
                       setServiceInfo={setService}
+                      onSuccess={() => setDrawerVisible(false)}
                       dependencyOptions={projectState.services.map(
                         (element) => serviceIdMap[element._id],
                       )}

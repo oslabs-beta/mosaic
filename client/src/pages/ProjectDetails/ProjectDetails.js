@@ -8,14 +8,45 @@ import {DependencyMap} from '../../components/DependencyMap';
 import css from './projectDetails.module.css';
 
 const {TabPane} = Tabs;
-const {Title, Text} = Typography;
+const {Title} = Typography;
 
-const buildServiceIdMap = (services) => {
-  const obj = {};
+const initialDependencyMap = {
+  nodes: [],
+  links: [],
+};
+
+const buildServiceMap = (services) => {
+  const map = {};
   services.forEach(({_id, name}) => {
-    obj[_id] = name;
+    map[_id] = name;
   });
-  return obj;
+  return map;
+};
+
+const buildDependencyMap = (services, serviceMap) => {
+  const map = {...initialDependencyMap};
+  services.forEach(({_id, name, dependency}) => {
+    if (!map.nodes.some((node) => node.name === name)) {
+      map.nodes.push({
+        id: _id,
+        name,
+      });
+    }
+    dependency.forEach((serviceId) => {
+      const newLink = {
+        source: name,
+        target: serviceMap[serviceId],
+        value: 1,
+      };
+      if (
+        !map.links.some((link) => link.source === name && link.target === serviceMap[serviceId]) &&
+        newLink.target !== undefined
+      ) {
+        map.links.push(newLink);
+      }
+    });
+  });
+  return map;
 };
 
 const callback = (key) => {
@@ -51,7 +82,8 @@ const ProjectDetails = () => {
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
   const [isDeleteProjectOpen, setIsDeleteProjectOpen] = useState(false);
-  const [serviceIdMap, setServiceIdMap] = useState({});
+  const [serviceMap, setServiceMap] = useState({});
+  const [dependencyMap, setDependencyMap] = useState(initialDependencyMap);
   const history = useHistory();
 
   const handleDelete = () => {
@@ -67,7 +99,7 @@ const ProjectDetails = () => {
         setFetching(true);
         const {data} = await axios.get(`http://localhost:8080/projects/${id}`);
         setProjectState(data);
-        setServiceIdMap(buildServiceIdMap(data?.services));
+        setServiceMap(buildServiceMap(data?.services));
         setFetching(false);
       } catch (e) {
         setError(e);
@@ -77,6 +109,10 @@ const ProjectDetails = () => {
     getProject();
   }, []);
 
+  useEffect(() => {
+    setDependencyMap(buildDependencyMap(projectState?.services, serviceMap));
+  }, [serviceMap, projectState]);
+
   const getServicesData = () =>
     projectState?.services?.map(({_id, name, version, dependency, status}) => ({
       key: _id,
@@ -85,7 +121,7 @@ const ProjectDetails = () => {
       dependencies: (
         <>
           {dependency?.map((dependencyId) => (
-            <Tag key={dependencyId}>{serviceIdMap[dependencyId]}</Tag>
+            <Tag key={dependencyId}>{serviceMap[dependencyId]}</Tag>
           ))}
         </>
       ),
@@ -170,7 +206,7 @@ const ProjectDetails = () => {
                   <Table columns={columns} dataSource={getServicesData()} bordered />
                 </TabPane>
                 <TabPane tab="Dependency Map" key="2">
-                  <DependencyMap />
+                  <DependencyMap dependencyMapData={dependencyMap} />
                 </TabPane>
               </Tabs>
             </Col>

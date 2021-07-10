@@ -1,5 +1,7 @@
 <!-- add PR # and description -->
-
+### Jul 9
+- [] Update dependency map graph visualization to use real data
+- [] Fix form state inconsistency issue on DependencyDetailsForm & ServiceDetails
 ### Jul 3
 - [] Update the UIs a bit to make rooms in ProjectDetails & ServiceDetails pages
 - [] Update RegisterServiceForm to be ServiceDetailsForm to be reusable both for adding service & updating service
