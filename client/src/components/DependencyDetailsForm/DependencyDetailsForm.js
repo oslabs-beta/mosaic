@@ -63,7 +63,7 @@ const DependencyDetailsForm = ({serviceInfo, setServiceInfo, dependencyOptions, 
             </Col>
             <Col xs={24}>
               <Button type="primary" onClick={() => formik.handleSubmit(formik.values)}>
-                Submit
+                Save
               </Button>
             </Col>
           </Row>

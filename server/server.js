@@ -13,6 +13,7 @@ import "./models/EventModel";
 import "./models/ProjectModel";
 import "./models/ServiceModel";
 import "./models/CustomEventsModel";
+import "./models/TeamModel";
 import "./services/passport";
 
 // Routes Imports
@@ -20,6 +21,7 @@ import authRouter from "./routers/auth";
 import projectRouter from "./routers/project";
 import serviceRouter from "./routers/service";
 import customEventRouter from "./routers/customEvent";
+import teamRouter from "./routers/team";
 
 // Environment Variables
 dotenv.config();
@@ -69,6 +71,7 @@ app.use('/auth', authRouter);
 app.use('/projects', projectRouter);
 app.use('/service', serviceRouter);
 app.use('/customEvent', customEventRouter);
+app.use('/team', teamRouter);
 
 app.use((err, req, res, next) => {
   const defaultErr = {

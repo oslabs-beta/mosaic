@@ -3,7 +3,7 @@ import Project from '../models/ProjectModel';
 const serviceController = {};
 
 serviceController.registerService = async (req, res, next) => {
-  const {name, description, version, ipAddress, host, status, projectId} = req.body;
+  const {name, description, version, ipAddress, host, status, projectId, ownedBy} = req.body;
 
   try {
     const existingService = await Service.findOne({name});
@@ -27,6 +27,7 @@ serviceController.registerService = async (req, res, next) => {
         events: [],
         description,
         projectId: projectId || '60a7210af2ee8c64dc1f611a',
+        ownedBy,
       });
       res.locals.response = newService;
       console.log('serviceController.registerService:', 'service registered');
@@ -61,6 +62,10 @@ serviceController.findServiceById = (req, res, next) => {
   const {id} = req.params;
 
   Service.findById(id)
+    .populate({
+      path: 'ownedBy',
+      model: 'teams',
+    })
     .then((data) => {
       res.locals.response = data;
       console.log('serviceController.findServiceById:', 'service found');

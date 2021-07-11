@@ -44,6 +44,9 @@ const ServiceSchema = new Schema(
       type: ObjectId,
       required: true,
     },
+    ownedBy: {
+      type: ObjectId,
+    }
   },
   options,
 );

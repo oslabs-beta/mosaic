@@ -123,6 +123,10 @@ function ServiceDetails() {
             <Col xs={24} lg={17}>
               <Title level={3}>{service.name}</Title>
               <p className={css.textLeftAligned}>
+                <strong>OwnedBy: </strong>
+                {service?.ownedBy?.name}
+              </p>
+              <p className={css.textLeftAligned}>
                 <strong>Description: </strong>
                 {service.description}
               </p>
