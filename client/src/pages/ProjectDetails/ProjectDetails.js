@@ -142,9 +142,9 @@ const ProjectDetails = () => {
       const p = new Ping();
 
       p.ping(service.ipAddress)
-        .then(() => {
+        .then((resTime) => {
           setServiceStatus((prev) => {
-            return {...prev, [service._id]: true};
+            return {...prev, [service._id]: resTime};
           });
         })
         .catch(() => {
@@ -286,7 +286,10 @@ const ProjectDetails = () => {
                   {service._id in serviceStatus && (
                     <span>
                       {serviceStatus[service._id] ? (
-                        <Badge status="success" />
+                        <>
+                          <Badge status="success" />
+                          <span>{serviceStatus[service._id]} ms</span>
+                        </>
                       ) : (
                         <Badge status="error" />
                       )}
