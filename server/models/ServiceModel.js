@@ -55,7 +55,7 @@ ServiceSchema.post('findOneAndDelete', async (doc, next) => {
   // Remove the referenced objectId from the dependency array of other services
   mongoose.model("services").updateMany(
     {dependency: { $elemMatch: {$eq: doc._id} }},
-    {$pull: { dependency: doc._id }},
+    {$pull: { dependency: doc._id },},
     {multi:true}, 
     function (err, result) {
       if (err) {

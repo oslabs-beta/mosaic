@@ -1,5 +1,25 @@
 import * as d3 from 'd3';
 
+// const COLOR_OPTIONS = ['#de4867', '#4daec0', '#dbcf49', '#f28e4b'];
+// const COLOR_OPTIONS = [
+//   '#1cbc9b',
+//   // '#16a086',
+//   '#2dcc70',
+//   // '#27ae61',
+//   '#3698db',
+//   // '#2a80b9',
+//   '#9b58b5',
+//   // '#8f44ad',
+//   // '#34495e',
+//   // '#2d3e50',
+//   '#f1c40f',
+//   // '#f39c11',
+//   '#e77e23',
+//   '#d25400',
+//   // '#e84c3d',
+//   '#c1392b',
+// ];
+
 const drag = (simulation) => {
   function dragstarted(event) {
     if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -12,15 +32,23 @@ const drag = (simulation) => {
   }
   function dragended(event) {
     if (!event.active) simulation.alphaTarget(0);
-    event.subject.fx = null;
-    event.subject.fy = null;
+    // event.subject.fx = null;
+    // event.subject.fy = null;
   }
   return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
+};
+
+const releasenode = (d) => {
+  d.fx = null;
+  d.fy = null;
 };
 
 export const runForceGraph = (container, data) => {
   // const color = d3.scaleOrdinal(d3.schemeCategory10);
   const color = d3.scaleOrdinal(d3.schemeSet3);
+  // const color = d3.scaleOrdinal(d3.schemeTableau10);
+  // const color = d3.scaleOrdinal(COLOR_OPTIONS);
+
   const links = data.links.map((d) => Object.create(d));
   const nodes = data.nodes.map((d) => Object.create(d));
 
@@ -36,7 +64,7 @@ export const runForceGraph = (container, data) => {
     )
     .force('charge', d3.forceManyBody().strength(200))
     .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(60));
+    .force('collision', d3.forceCollide().radius(50));
 
   const svg = d3.select(container).append('svg').attr('viewBox', [0, 0, width, height]);
   const zoomContainer = svg.append('g');
@@ -83,11 +111,12 @@ export const runForceGraph = (container, data) => {
 
   var circle = node
     .append('circle')
-    .attr('r', 10)
+    .attr('r', 8)
     .attr('fill', (d) => color(d.ownedBy))
     .attr('stroke', '#000')
     .on('mouseover.fade', fade(0.1))
-    .on('mouseout.fade', fade(1));
+    .on('mouseout.fade', fade(1))
+    .on('dblclick', releasenode);
 
   var label = node
     .append('text')
