@@ -1,10 +1,16 @@
 import {useEffect, useState} from 'react';
 import {useParams, Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
-import {Row, Col, Tabs, Table, Button, Badge, Modal, Typography, Spin, Tag} from 'antd';
-import {PlusCircleOutlined, SettingFilled, StopOutlined} from '@ant-design/icons';
+import {Row, Col, Drawer, Tabs, Table, Button, Badge, Modal, Typography, Spin, Tag} from 'antd';
+import {
+  PlusCircleOutlined,
+  SettingFilled,
+  StopOutlined,
+  MedicineBoxOutlined,
+} from '@ant-design/icons';
 import {useProjectContext} from '../../providers/Project';
 import {DependencyMap} from '../../components/DependencyMap';
+import Ping from 'ping.js';
 import css from './projectDetails.module.css';
 
 const {TabPane} = Tabs;
@@ -84,6 +90,8 @@ const ProjectDetails = () => {
   const [isDeleteProjectOpen, setIsDeleteProjectOpen] = useState(false);
   const [serviceMap, setServiceMap] = useState({});
   const [dependencyMap, setDependencyMap] = useState(initialDependencyMap);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [serviceStatus, setServiceStatus] = useState({});
   const history = useHistory();
 
   const handleDelete = () => {
@@ -129,10 +137,28 @@ const ProjectDetails = () => {
       actions: <Link to={`/service/${_id}`}>View</Link>,
     }));
 
+  const pingAll = () => {
+    projectState.services.forEach((service) => {
+      const p = new Ping();
+
+      p.ping(service.ipAddress)
+        .then((resTime) => {
+          setServiceStatus((prev) => {
+            return {...prev, [service._id]: resTime};
+          });
+        })
+        .catch(() => {
+          setServiceStatus((prev) => {
+            return {...prev, [service._id]: false};
+          });
+        });
+    });
+  };
+
   if (error) {
     return null;
   }
-
+  console.log(serviceStatus);
   return (
     <div>
       <div className={css.spinnerContainer}>
@@ -192,6 +218,18 @@ const ProjectDetails = () => {
                     Delete Project
                   </Button>
                 </Col>
+                <Col sm={24} className={css.buttonContainer}>
+                  <Button
+                    ghost
+                    type="primary"
+                    shape="round"
+                    icon={<MedicineBoxOutlined />}
+                    size="middle"
+                    className={css.button}
+                    onClick={() => setDrawerVisible(true)}>
+                    Dependency Health Check
+                  </Button>
+                </Col>
               </Row>
             </Col>
           </Row>
@@ -220,6 +258,47 @@ const ProjectDetails = () => {
             onCancel={() => setIsDeleteProjectOpen(false)}>
             <p>Are you sure you want to delete {projectState.name}? This cannot be undone.</p>
           </Modal>
+          <Drawer
+            title="Dependency Health Check"
+            placement="right"
+            closable
+            width={400}
+            onClose={() => {
+              setDrawerVisible(false);
+              setServiceStatus({});
+            }}
+            visible={drawerVisible}>
+            <div>
+              <Button
+                style={{width: '30%'}}
+                type="primary"
+                shape="round"
+                icon={<MedicineBoxOutlined />}
+                size="small"
+                className={css.button}
+                onClick={pingAll}>
+                Ping All
+              </Button>
+              {projectState.services.map((service) => (
+                <div key={service._id}>
+                  {service.name}
+                  {!(service._id in serviceStatus) && <Badge status="default" />}
+                  {service._id in serviceStatus && (
+                    <span>
+                      {serviceStatus[service._id] ? (
+                        <>
+                          <Badge status="success" />
+                          <span>{serviceStatus[service._id]} ms</span>
+                        </>
+                      ) : (
+                        <Badge status="error" />
+                      )}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Drawer>
         </>
       )}
     </div>
