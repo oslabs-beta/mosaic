@@ -43,7 +43,7 @@ projectController.fetchProjects = (req, res, next) => {
 
 projectController.fetchProject = (req, res, next) => {
   const { id } = req.params;
-
+  console.log('hiii', id);
   Project.find({_id: id})
     .populate({
       path: 'services',
