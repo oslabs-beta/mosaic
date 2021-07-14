@@ -6,8 +6,6 @@ projectController.createProject = (req, res, next) => {
   Project.create({
     name: req.body.projectName,
     description: req.body.projectDescription,
-    services: req.body.services,
-    serviceCount: req.body.services.length,
   })
     .then((data) => {
       res.locals.response = data;
@@ -43,7 +41,6 @@ projectController.fetchProjects = (req, res, next) => {
 
 projectController.fetchProject = (req, res, next) => {
   const { id } = req.params;
-  console.log('hiii', id);
   Project.find({_id: id})
     .populate({
       path: 'services',

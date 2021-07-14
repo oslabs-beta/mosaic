@@ -87,6 +87,22 @@ const columns = [
   // },
 ];
 
+const drawerColumns = [
+  {
+    title: 'Service',
+    dataIndex: 'service',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    align: 'center',
+  },
+  {
+    title: 'Response Time',
+    dataIndex: 'responseTime',
+  },
+];
+
 const ProjectDetails = () => {
   const {id} = useParams();
   const {projectState, setProjectState} = useProjectContext();
@@ -163,10 +179,28 @@ const ProjectDetails = () => {
     });
   };
 
+  const getServicesHealthData = () => {
+    return projectState.services.map((service) => {
+      let status = <Badge status="default" />;
+      if (service._id in serviceStatus) {
+        if (serviceStatus[service._id]) {
+          status = <Badge status="success" />;
+        } else {
+          status = <Badge status="error" />;
+        }
+      }
+      return {
+        key: service._id,
+        service: service.name,
+        status,
+        responseTime: serviceStatus[service._id] ? `${serviceStatus[service._id]}ms` : null,
+      };
+    });
+  };
+
   if (error) {
     return null;
   }
-  console.log(serviceStatus);
   return (
     <div>
       <div className={css.spinnerContainer}>
@@ -270,7 +304,7 @@ const ProjectDetails = () => {
             title="Dependency Health Check"
             placement="right"
             closable
-            width={400}
+            width={500}
             onClose={() => {
               setDrawerVisible(false);
               setServiceStatus({});
@@ -278,7 +312,7 @@ const ProjectDetails = () => {
             visible={drawerVisible}>
             <div>
               <Button
-                style={{width: '30%'}}
+                style={{width: '30%', marginBottom: '20px'}}
                 type="primary"
                 shape="round"
                 icon={<MedicineBoxOutlined />}
@@ -287,24 +321,12 @@ const ProjectDetails = () => {
                 onClick={pingAll}>
                 Ping All
               </Button>
-              {projectState.services.map((service) => (
-                <div key={service._id}>
-                  {service.name}
-                  {!(service._id in serviceStatus) && <Badge status="default" />}
-                  {service._id in serviceStatus && (
-                    <span>
-                      {serviceStatus[service._id] ? (
-                        <>
-                          <Badge status="success" />
-                          <span>{serviceStatus[service._id]} ms</span>
-                        </>
-                      ) : (
-                        <Badge status="error" />
-                      )}
-                    </span>
-                  )}
-                </div>
-              ))}
+              <Table
+                columns={drawerColumns}
+                dataSource={getServicesHealthData()}
+                bordered
+                pagination={false}
+              />
             </div>
           </Drawer>
         </>

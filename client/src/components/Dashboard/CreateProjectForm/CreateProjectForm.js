@@ -40,7 +40,7 @@ const CreateProject = ({visible, onCreate, onCancel}) => {
             ]}>
             <Input placeholder="Project Name" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Services"
             name="services"
             required={true}
@@ -51,7 +51,7 @@ const CreateProject = ({visible, onCreate, onCancel}) => {
               },
             ]}>
             <Select placeholder="Services" mode="tags" />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             label="Description"
