@@ -1,4 +1,12 @@
 <!-- add PR # and description -->
+
+### Jul 12
+- [] Add team property to service on service details page
+- [] Update dependency map to have arrow heads for directed graph
+- [] Update dependency map to have zoom-in/zoom-out feature
+- [] Update dependency map to have color according to team
+- [] Update dependency map to have highlight feature for immediate dependency
+- [] Update dependency map to have sticky note functionality
 ### Jul 9
 - [] Update dependency map graph visualization to use real data
 - [] Fix form state inconsistency issue on DependencyDetailsForm & ServiceDetails

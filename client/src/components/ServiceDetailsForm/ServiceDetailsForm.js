@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
-import {Form, Input, Button, Spin, Typography} from 'antd';
+import {Form, Input, Button, Spin, Typography, Select} from 'antd';
 import axios from 'axios';
 import {useProjectContext} from '../../providers/Project';
 import css from './serviceDetails.module.css';
 
 const {Title} = Typography;
+const {Option} = Select;
 
 function ServiceDetailsForm() {
   const {id} = useParams();
@@ -16,12 +17,16 @@ function ServiceDetailsForm() {
     version: '',
     ipAddress: '',
     host: '',
+    ownedBy: '',
   });
+  const [teamOptions, setTeamOptions] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const {
     projectState: {_id: projectId},
   } = useProjectContext();
+
+  console.log(serviceInfo);
 
   const handleSubmit = async (values) => {
     if (id) {
@@ -73,6 +78,23 @@ function ServiceDetailsForm() {
     if (id) {
       fetchServiceInfo();
     }
+
+    const fetchTeams = async () => {
+      try {
+        setSubmitting(true);
+        const {data} = await axios.get(`http://localhost:8080/team`);
+        const options = data?.map(({_id, name}) => ({
+          value: _id,
+          name,
+        }));
+        setTeamOptions(options);
+        setSubmitting(false);
+      } catch (e) {
+        console.log(e);
+        setError(e);
+      }
+    };
+    fetchTeams();
   }, []);
 
   if (error) {
@@ -96,6 +118,7 @@ function ServiceDetailsForm() {
               version: serviceInfo.version,
               ipAddress: serviceInfo.ipAddress,
               host: serviceInfo.host,
+              ownedBy: serviceInfo.ownedBy,
             }}
             onFinish={handleSubmit}
             onFinishFailed={onFinishFailed}>
@@ -110,6 +133,24 @@ function ServiceDetailsForm() {
                 },
               ]}>
               <Input placeholder="My Service" />
+            </Form.Item>
+            <Form.Item
+              label="Owned By"
+              name="ownedBy"
+              required={true}
+              rules={[
+                {
+                  required: true,
+                  message: 'Cannot be blank',
+                },
+              ]}>
+              <Select placeholder="Please select the team" style={{width: '100%'}}>
+                {teamOptions.map(({value, name}) => (
+                  <Option key={value} value={value}>
+                    {name}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
 
             <Form.Item label="Description" name="description">

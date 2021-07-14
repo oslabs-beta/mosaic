@@ -31,11 +31,12 @@ const buildServiceMap = (services) => {
 
 const buildDependencyMap = (services, serviceMap) => {
   const map = {...initialDependencyMap};
-  services.forEach(({_id, name, dependency}) => {
+  services.forEach(({_id, name, dependency, ownedBy}) => {
     if (!map.nodes.some((node) => node.name === name)) {
       map.nodes.push({
         id: _id,
         name,
+        ownedBy: ownedBy.name,
       });
     }
     dependency.forEach((serviceId) => {
@@ -65,6 +66,10 @@ const columns = [
     dataIndex: 'name',
   },
   {
+    title: 'Owner Team',
+    dataIndex: 'ownerTeam',
+  },
+  {
     title: 'Version',
     dataIndex: 'version',
   },
@@ -76,10 +81,10 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
   },
-  {
-    title: 'Actions',
-    dataIndex: 'actions',
-  },
+  // {
+  //   title: 'Actions',
+  //   dataIndex: 'actions',
+  // },
 ];
 
 const ProjectDetails = () => {
@@ -122,20 +127,23 @@ const ProjectDetails = () => {
   }, [serviceMap, projectState]);
 
   const getServicesData = () =>
-    projectState?.services?.map(({_id, name, version, dependency, status}) => ({
-      key: _id,
-      name,
-      version,
-      dependencies: (
-        <>
-          {dependency?.map((dependencyId) => (
-            <Tag key={dependencyId}>{serviceMap[dependencyId]}</Tag>
-          ))}
-        </>
-      ),
-      status: <Badge count={status} style={{backgroundColor: '#cccccc', color: 'black'}} />,
-      actions: <Link to={`/service/${_id}`}>View</Link>,
-    }));
+    projectState?.services
+      ?.sort((a, b) => (a.name < b.name ? -1 : 1))
+      ?.map(({_id, name, version, dependency, status, ownedBy}) => ({
+        key: _id,
+        name: <Link to={`/service/${_id}`}>{name}</Link>,
+        ownerTeam: ownedBy.name,
+        version,
+        dependencies: (
+          <>
+            {dependency?.map((dependencyId) => (
+              <Tag key={dependencyId}>{serviceMap[dependencyId]}</Tag>
+            ))}
+          </>
+        ),
+        status: <Badge count={status} style={{backgroundColor: '#cccccc', color: 'black'}} />,
+        // actions: <Link to={`/service/${_id}`}>View</Link>,
+      }));
 
   const pingAll = () => {
     projectState.services.forEach((service) => {

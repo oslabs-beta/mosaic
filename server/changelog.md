@@ -1,5 +1,9 @@
 <!-- add PR # and description -->
 
+
+### Jul 12
+- [] Add Team model, controller
+- [] Add more logic to post hook of ServiceSchema
 ### Jul 3
 - [] Add Update/Delete functionality on ServiceDetails page
 - [] Add Update Dependency functionality 

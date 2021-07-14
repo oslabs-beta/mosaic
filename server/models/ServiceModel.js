@@ -44,9 +44,52 @@ const ServiceSchema = new Schema(
       type: ObjectId,
       required: true,
     },
+    ownedBy: {
+      type: ObjectId,
+    }
   },
   options,
 );
+
+ServiceSchema.post('findOneAndDelete', async (doc, next) => {
+  // Remove the referenced objectId from the dependency array of other services
+  mongoose.model("services").updateMany(
+    {dependency: { $elemMatch: {$eq: doc._id} }},
+    {$pull: { dependency: doc._id },},
+    {multi:true}, 
+    function (err, result) {
+      if (err) {
+        console.log(`[error] ${err}`);
+        next(err);
+      } else {
+        console.log('success');
+        console.log('result --> ', result);
+        next();
+      }
+    }
+  );
+
+  mongoose.model("projects").findOneAndUpdate(
+    {services: { $elemMatch: {$eq: doc._id} }},
+    {
+      $pull: { services: doc._id },
+      $inc: {
+        serviceCount: -1
+      }
+    },
+    {multi:true}, 
+    function (err, result) {
+      if (err) {
+        console.log(`[error] ${err}`);
+        next(err);
+      } else {
+        console.log('success');
+        console.log('result --> ', result);
+        next();
+      }
+    }
+  );
+});
 
 const Service = mongoose.model('services', ServiceSchema);
 export default Service;

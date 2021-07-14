@@ -47,7 +47,11 @@ projectController.fetchProject = (req, res, next) => {
   Project.find({_id: id})
     .populate({
       path: 'services',
-      model: 'services'
+      model: 'services',
+      populate: {
+        path: 'ownedBy',
+        model: 'teams'
+      }
     })
     .then((data) =>{
       console.log(data);
