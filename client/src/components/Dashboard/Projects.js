@@ -62,7 +62,7 @@ function Projects() {
         />
       </Row>
 
-      {projectRows.map((row, i) => (
+      {projectRows.splice(0, 2).map((row, i) => (
         <Row key={`Row - ${i}`} gutter={16} style={{marginBottom: '16px'}}>
           {row.map((project) => (
             <Col key={`Project - ${project._id}`} span={8}>
