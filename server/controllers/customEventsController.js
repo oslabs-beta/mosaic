@@ -22,10 +22,6 @@ customEventsController.fetchCustomEvents = (req, res, next) => {
 
 
 customEventsController.createCustomEvent = (req, res, next) => {
-    console.log("req.body.customEventPayload,")
-    console.log(req.body.customEventPayload)
-    console.log("req.body")
-    console.log(req.body)
     
     CustomEvent.create({
       name: req.body.customEventName, 
