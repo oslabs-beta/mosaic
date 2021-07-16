@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import {Form, Input, Modal, Select} from 'antd';
+import TrackCustomEvent from '../../CustomEvents/utils';
 
 const CreateProject = ({visible, onCreate, onCancel}) => {
   const [form] = Form.useForm();
@@ -16,6 +17,10 @@ const CreateProject = ({visible, onCreate, onCancel}) => {
             .then((values) => {
               form.resetFields();
               onCreate(values);
+              TrackCustomEvent('User Created New Project', new Date(), {
+                user: 'demoUser',
+                customEventPayload: values,
+              });
             })
             .catch((info) => {
               console.log('Validate Failed:', info);

@@ -1,18 +1,23 @@
 import {Table} from 'antd';
 import {useEffect, useState} from 'react';
-// import '../Dashboard.css';
 import axios from 'axios';
+import trackCustomEvent from './utils';
 
 function CustomEventsTable() {
   const [customEvents, setCustomEvents] = useState([]);
 
   useEffect(() => {
     const fetchCustomEvents = async () => {
+      console.log('visit');
+      trackCustomEvent('User Visited a Page', new Date(), {
+        user: 'demoUser',
+        customEventPayload: 'Visited Custom Events Page',
+      });
       try {
         const customEvents = await axios.get('http://localhost:8080/customEvent');
         setCustomEvents(customEvents.data);
       } catch (error) {
-        console.log(error);
+        console.log('customEventsTable: ', error);
       }
     };
     fetchCustomEvents();
@@ -38,7 +43,7 @@ function CustomEventsTable() {
 
   return (
     <div>
-      <Table dataSource={customEvents} columns={columns} pagination={{pageSize: 15}} />
+      <Table dataSource={customEvents} columns={columns} pagination={{pageSize: 10}} />
     </div>
   );
 }
