@@ -40,18 +40,6 @@ const CreateProject = ({visible, onCreate, onCancel}) => {
             ]}>
             <Input placeholder="Project Name" />
           </Form.Item>
-          <Form.Item
-            label="Services"
-            name="services"
-            required={true}
-            rules={[
-              {
-                required: true,
-                message: 'Cannot be blank',
-              },
-            ]}>
-            <Select placeholder="Services" mode="tags" />
-          </Form.Item>
 
           <Form.Item
             label="Description"
