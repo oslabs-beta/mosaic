@@ -1,11 +1,14 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+import {options} from './helpers';
 
-const options = {
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-};
+const Schema = mongoose.Schema;
+const {
+  Types: { 
+    Mixed,
+    ObjectId, 
+    String 
+  },
+} = Schema;
 
 const EventSchema = new Schema(
   {
@@ -17,15 +20,19 @@ const EventSchema = new Schema(
     description: {
       type: String,
       required: true,
+      default: "",
     },
-    servicesId: 
-      {
-        type: array,
-      },
-    
+    servicesId: {
+      type: [ObjectId],
+      default: [],
+    },
+    properties: {
+      type: Mixed,
+      default: {},
+    }
   },
-  options
+  options,
 );
 
-const Event = mongoose.model('Event', EventModel);
-module.exports = { Event };
+const Event = mongoose.model('events', EventSchema);
+export default {Event};

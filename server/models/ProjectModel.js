@@ -1,5 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import {options} from './helpers';
+
 const Schema = mongoose.Schema;
+const {
+  Types: { 
+    Mixed,
+    Number,
+    ObjectId, 
+    String 
+  },
+} = Schema;
 
 const ProjectSchema = new Schema(
   {
@@ -11,16 +21,19 @@ const ProjectSchema = new Schema(
     description: {
       type: String,
       required: true,
+      default: "",
     },
     services: {
-      type: array,
+      type: [ObjectId],
+      default: [],
     },
     serviceCount: {
       type: Number,
+      default: 0,
     },
   },
-  options
+  options,
 );
 
-const Project = mongoose.model('Project', ProjectModel);
-module.exports = { Project };
+const Project = mongoose.model('projects', ProjectSchema);
+export default Project;

@@ -24,9 +24,11 @@ module.exports = {
     'plugin:prettier/recommended', // Make this the last element so prettier config overrides other formatting rules
   ],
   rules: {
-    'prettier/prettier': ['error', {}, {usePrettierrc: true}], // Use our .prettierrc file as source
+    'prettier/prettier': ['error', {endOfLine: 'auto'}, {usePrettierrc: true}], // Use our .prettierrc file as source
     'react/jsx-filename-extension': [1, {extensions: ['.js', '.jsx']}],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 1,
+    'react/prop-types': 1,
   },
 };

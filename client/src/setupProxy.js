@@ -18,10 +18,10 @@ const getProxy = () => {
 
 module.exports = function (app) {
   app.use(
-    '/api',
-    createProxyMiddleware({
-      target: getProxy(),
-      changeOrigin: true,
+    createProxyMiddleware('/auth/google', {
+      // target: getProxy(),
+      target: 'http://localhost:8080',
+      // changeOrigin: true,
     }),
   );
 };
