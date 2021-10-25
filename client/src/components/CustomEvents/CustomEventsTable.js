@@ -15,6 +15,9 @@ function CustomEventsTable() {
       });
       try {
         const customEvents = await axios.get('http://localhost:8080/customEvent');
+        const sortedCustomEvents = customEvents.data.sort((a, b) => {
+          return a.updatedAt > b.updatedAt ? -1 : 1;
+        });
         setCustomEvents(customEvents.data);
       } catch (error) {
         console.log('customEventsTable: ', error);
@@ -22,6 +25,8 @@ function CustomEventsTable() {
     };
     fetchCustomEvents();
   }, []);
+
+  console.log(customEvents);
 
   const columns = [
     {
@@ -33,6 +38,9 @@ function CustomEventsTable() {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
+      render: (text, record) => {
+        return new Date(record.date).toLocaleString();
+      },
     },
     {
       title: 'Payload',
